@@ -1,0 +1,31 @@
+﻿<h3>Test Component</h3>
+
+<p>I know about counter value</p>
+<p>Counter Value is </p>
+
+<p>
+    name : <input type="text" @bind="@name"  />
+    name is @name
+    <button @onclick="nameChanged"> inform parent</button>
+</p>
+
+@code {
+    [Parameter]
+    public EventCallback<string> NameChanged { get; set; }
+
+
+    private void nameChanged()
+    {
+        NameChanged.InvokeAsync(name);
+    }
+
+    public void getNameFromOutSide(string _name)
+    {
+        name = _name;
+        StateHasChanged();
+
+    }
+
+    public string name;
+   
+}
