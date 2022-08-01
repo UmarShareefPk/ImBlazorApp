@@ -1,0 +1,79 @@
+﻿@page "/Incidents"
+@using IM.Models
+
+@inject IHttpClientFactory ClientFactory
+@inject IConfiguration configuration
+
+
+<div class="container">
+    <h1>Incidents</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Assigned TO</th>
+                <th scope="col">Created By</th>
+                <th scope="col">Created Date</th>
+                <th scope="col">Due Date</th>
+                <th scope="col">Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(incidents != null)
+            {
+                @foreach(Incident incident in incidents)
+                {
+                     <IncidentRow incident="@incident"></IncidentRow>
+                }
+            }           
+        
+        </tbody>
+
+    </table>
+
+</div>
+
+@code {
+
+    //int PageSize, int PageNumber, string SortBy, string SortDirection, string Search;
+    List<Incident> incidents;
+    IncidentPages incidentPages;
+    protected override async Task OnInitializedAsync()
+    {
+
+
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            string token = await localStorage.GetItemAsync<string>("token");
+            var request = new HttpRequestMessage(HttpMethod.Get,
+             configuration.GetSection("APIURL").Value + "/Incidents/GetIncidentsWithPage?PageSize=10&PageNumber=1&SortBy=a&SortDirection=a&Search=");
+
+            request.Headers.Add("Authorization", "Bearer " + token);
+           
+
+            var client = ClientFactory.CreateClient();
+
+            var response = await client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                using var responseStream = await response.Content.ReadAsStreamAsync();
+                incidentPages = await JsonSerializer.DeserializeAsync<IncidentPages>(responseStream);
+                incidents = incidentPages.Incidents;
+            }
+            else
+            {
+
+            }
+            StateHasChanged();
+        }
+    }
+
+     
+}

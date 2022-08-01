@@ -1,0 +1,18 @@
+﻿@using IM.Models
+
+ <tr>
+    <td>@incident.Title</td>
+    <td>@incident.Description</td>
+    <td>@incident.AssignedTo</td>
+    <td>@incident.CreatedBy</td>
+    <td>@incident.CreatedAT</td>
+    <td>@incident.DueDate</td>
+    <td>@incident.Status</td>
+  </tr>
+
+@code {
+    [Parameter]
+    public Incident incident{ get; set; }
+
+
+}

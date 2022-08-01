@@ -1,61 +1,57 @@
 ﻿@page "/"
 
-@using System.Text.Json
-@using System.Text.Json.Serialization
-@using IM.Models
-@using ImBlazorApp.Models
-@using System.Text
-@using Microsoft.AspNetCore.Http
-@inject IHttpClientFactory ClientFactory
 
 
-<h3>Login</h3>
+
 
 <div class="container">
-    <h4>Welcome</h4>
-    <h6>Please Login</h6>
-    
-        <div class="form-group">
-            <label>Email Address</label>
-            <input type="text" @bind-value="username"  placeholder="username" />
-        </div>
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" @bind="password" placeholder="username" />
+
+
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <h4>Welcome</h4>
+            <h6>Please Login</h6>
+
+            <div class="form-group">
+                <label for="username">Email Address</label>
+                <input type="text" class="form-control" @bind-value="username" id="username" placeholder="username" />
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" @bind="password" id="password" placeholder="username" />
+            </div>
+
+            <div class="form-group">
+                <label class="text-danger"> @errorText </label>
+            </div>
+
+            <div class="form-group">
+                <button @onclick="Login_click" class="btn btn-primary">Login </button>
+            </div>
         </div>
 
-        <div class="form-group">
-            <label class="text-danger"> test 2</label>           
-        </div>
-
-          <div class="form-group">
-          <button @onclick="Login_click">Login </button>
-        </div>
-
-  
-
+    </div>
 </div>
-
 
 @code {
     [Inject]
     public NavigationManager navigationManager { get; set; }
 
- 
-    private string? username { get; set; }    
-    private string? password;
 
+    private string? username;
+    private string? password;
+    private string errorText = "";
 
     private async Task Login_click()
     {
         var user = new UserLoginModel();
         user.Username = username;
-        user.Password = password;
+        user.Password = password;        
 
         var request = new HttpRequestMessage(HttpMethod.Post,
-           "https://localhost:44310/api/Users/authenticate");
+          configuration.GetSection("APIURL").Value  + "/Users/authenticate");
         request.Content =new StringContent(JsonSerializer.Serialize(user), Encoding.UTF8, "application/json");
-
 
         // request.Headers.Add("Content-Type", "application/json");
         //request.Headers.Add("User-Agent", "HttpClientFactory-Sample");
@@ -69,45 +65,19 @@
             using var responseStream = await response.Content.ReadAsStreamAsync();
             var userLoginInfo = await JsonSerializer.DeserializeAsync<UserLogin>(responseStream);
 
-            //  HttpContext.Session.SetString("Token", "The Doctor");
-            //navigator.NavigateTo("/Project", true);
+            await localStorage.SetItemAsync("token", userLoginInfo.Token);
 
-          
-            navigationManager.NavigateTo("/counter");
+            navigationManager.NavigateTo("/Incidents");
         }
         else
         {
-            // getBranchesError = true;
+            errorText = "Invalid username or password.";            
         }
 
-        //shouldRender = true;
+        
     }
 
 
-    //private async Task Login_click()
-    //{
-    //     var request = new HttpRequestMessage(HttpMethod.Get,
-    //        "https://api.github.com/repos/dotnet/AspNetCore.Docs/branches");
 
-    //    request.Headers.Add("Accept", "application/vnd.github.v3+json");
-    //    request.Headers.Add("User-Agent", "HttpClientFactory-Sample");
-
-    //    var client = ClientFactory.CreateClient();
-
-    //    var response = await client.SendAsync(request);
-
-    //    if (response.IsSuccessStatusCode)
-    //    {
-    //        using var responseStream = await response.Content.ReadAsStreamAsync();
-    //       // branches = await JsonSerializer.DeserializeAsync
-    //          //  <IEnumerable<GitHubBranch>>(responseStream);
-    //    }
-    //    else
-    //    {
-    //       // getBranchesError = true;
-    //    }
-
-    //    //shouldRender = true;
-    //}
 
 }

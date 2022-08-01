@@ -1,13 +1,17 @@
 ﻿@inherits LayoutComponentBase
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+    @if(!string.IsNullOrEmpty(token) )
+    {
+       @* <div class="sidebar">
+            <NavMenu />
+        </div>*@
+    }
 
     <div class="main">
         <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+         @*   <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>*@
         </div>
 
         <div class="content px-4">
@@ -15,3 +19,20 @@
         </div>
     </div>
 </div>
+
+@code {
+    string token = "";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            token = await localStorage.GetItemAsStringAsync("token");
+            StateHasChanged();
+        }
+    }
+
+    
+    
+
+}

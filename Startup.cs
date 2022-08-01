@@ -1,3 +1,4 @@
+using Blazored.LocalStorage;
 using ImBlazorApp.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
@@ -31,6 +32,7 @@ namespace ImBlazorApp
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
             services.AddHttpClient();
+            services.AddBlazoredLocalStorage();
 
             services.AddDistributedMemoryCache();
             services.AddSession(options =>
