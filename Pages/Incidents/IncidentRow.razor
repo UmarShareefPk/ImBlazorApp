@@ -1,18 +1,31 @@
 ﻿@using IM.Models
+@using ImBlazorApp.Data
+@inject IUserService userService
 
  <tr>
-    <td>@incident.Title</td>
-    <td>@incident.Description</td>
-    <td>@incident.AssignedTo</td>
-    <td>@incident.CreatedBy</td>
-    <td>@incident.CreatedAT</td>
-    <td>@incident.DueDate</td>
-    <td>@incident.Status</td>
+    <td class="text-nowrap" title="@incident.Title"> <a href="#"> @(incident.Title.Length > 30? incident.Title.Substring(0,30) + "..." : incident.Title) </a>  </td>
+    <td class="text-nowrap" title="@incident.Description" >@(incident.Description.Length > 30? incident.Description.Substring(0,30) + "..." : incident.Description) </td>
+    <td class="text-nowrap">@AssignedTo</td>
+    <td class="text-nowrap">@CreatedBy</td>
+    <td class="text-nowrap">@incident.CreatedAT</td>
+    <td class="text-nowrap">@incident.DueDate</td>
+    <td class="text-nowrap">@incident.Status</td>
   </tr>
 
 @code {
     [Parameter]
-    public Incident incident{ get; set; }
+    public Incident incident { get; set; }
+    string AssignedTo = "";
+    string CreatedBy = "";
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            AssignedTo = await userService.GetUserNameById(incident.AssignedTo);
+            CreatedBy = await userService.GetUserNameById(incident.CreatedBy);
+            StateHasChanged();
+        }
+    }
 
 }

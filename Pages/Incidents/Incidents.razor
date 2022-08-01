@@ -5,19 +5,19 @@
 @inject IConfiguration configuration
 
 
-<div class="container">
+<div class="container px-8">
     <h1>Incidents</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">Title</th>
-                <th scope="col">Description</th>
-                <th scope="col">Assigned TO</th>
-                <th scope="col">Created By</th>
-                <th scope="col">Created Date</th>
-                <th scope="col">Due Date</th>
-                <th scope="col">Status</th>
+                <th class="text-nowrap" scope="col">Title</th>
+                <th class="text-nowrap" scope="col">Description</th>
+                <th class="text-nowrap" scope="col">Assigned TO</th>
+                <th class="text-nowrap" scope="col">Created By</th>
+                <th class="text-nowrap" scope="col">Created Date</th>
+                <th class="text-nowrap" scope="col">Due Date</th>
+                <th class="text-nowrap" scope="col">Status</th>
             </tr>
         </thead>
         <tbody>
@@ -32,6 +32,8 @@
         </tbody>
 
     </table>
+
+    <Pagination></Pagination>
 
 </div>
 

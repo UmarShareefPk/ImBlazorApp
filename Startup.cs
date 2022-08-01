@@ -33,6 +33,7 @@ namespace ImBlazorApp
             services.AddSingleton<WeatherForecastService>();
             services.AddHttpClient();
             services.AddBlazoredLocalStorage();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddDistributedMemoryCache();
             services.AddSession(options =>

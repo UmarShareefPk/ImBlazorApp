@@ -5,8 +5,8 @@ namespace ImBlazorApp.Models
 {
     public class IncidentPages
     {
-            public int Total_Incidents { get; set; }
-            public List<Incident> Incidents { get; set; }
-        
+        public int Total_Incidents { get; set; }
+        public List<Incident> Incidents { get; set; }
+
     }
 }

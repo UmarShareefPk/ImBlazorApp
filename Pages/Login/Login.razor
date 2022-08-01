@@ -1,20 +1,19 @@
 ﻿@page "/"
-
-
-
-
+@using ImBlazorApp.Data
+@inject IUserService userService
 
 <div class="container">
-
-
+    
     <div class="row">
         <div class="col-3"></div>
         <div class="col-6">
+            <div class="login-container">
             <h4>Welcome</h4>
+            <br />
             <h6>Please Login</h6>
 
             <div class="form-group">
-                <label for="username">Email Address</label>
+                <label for="username">Username</label>
                 <input type="text" class="form-control" @bind-value="username" id="username" placeholder="username" />
             </div>
             <div class="form-group">
@@ -27,10 +26,11 @@
             </div>
 
             <div class="form-group">
-                <button @onclick="Login_click" class="btn btn-primary">Login </button>
+                <button @onclick="Login_click" class="btn btn-primary btn-lg">Login </button>
             </div>
         </div>
-
+        </div>
+    
     </div>
 </div>
 
@@ -53,9 +53,6 @@
           configuration.GetSection("APIURL").Value  + "/Users/authenticate");
         request.Content =new StringContent(JsonSerializer.Serialize(user), Encoding.UTF8, "application/json");
 
-        // request.Headers.Add("Content-Type", "application/json");
-        //request.Headers.Add("User-Agent", "HttpClientFactory-Sample");
-
         var client = ClientFactory.CreateClient();
 
         var response = await client.SendAsync(request);
@@ -66,6 +63,10 @@
             var userLoginInfo = await JsonSerializer.DeserializeAsync<UserLogin>(responseStream);
 
             await localStorage.SetItemAsync("token", userLoginInfo.Token);
+
+            var allUsers = await userService.GetAllUsers(userLoginInfo.Token);
+            await localStorage.SetItemAsync("allUsers", allUsers);
+
 
             navigationManager.NavigateTo("/Incidents");
         }

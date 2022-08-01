@@ -48,3 +48,12 @@ a, .btn-link {
         right: 0.75rem;
         top: 0.5rem;
     }
+
+.container .login-container{
+   margin-top:5%;
+   padding:40px 50px;
+   border: 1px dotted gray;
+   background-color:indigo;
+   border-radius:10%;
+   color:white
+}
