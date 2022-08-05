@@ -1,4 +1,5 @@
 ﻿@using System.Net.Http
+@using ImBlazorApp.Helper
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.Authorization
 @using Microsoft.AspNetCore.Components.Forms
@@ -18,3 +19,5 @@
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
 @inject IHttpClientFactory ClientFactory
 @inject IConfiguration configuration
+@inject IJSRuntime JS
+@inject ICommon Common

@@ -1,5 +1,6 @@
 using Blazored.LocalStorage;
 using ImBlazorApp.Data;
+using ImBlazorApp.Helper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Hosting;
@@ -34,6 +35,7 @@ namespace ImBlazorApp
             services.AddHttpClient();
             services.AddBlazoredLocalStorage();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ICommon, Common>();
 
             services.AddDistributedMemoryCache();
             services.AddSession(options =>

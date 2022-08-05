@@ -49,11 +49,46 @@ a, .btn-link {
         top: 0.5rem;
     }
 
-.container .login-container{
-   margin-top:5%;
-   padding:40px 50px;
-   border: 1px dotted gray;
-   background-color:indigo;
-   border-radius:10%;
-   color:white
+.im-btn {
+    background-color: #1a237e;
+    color:white;
+}
+
+.login-page {
+    width: 100vw;
+    color: #1a237e;
+    overflow: hidden;
+}
+
+.login-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+    /*  background-color: #1a237e;*/
+}
+
+ .login-container .form-group {
+     width:60%;
+ }
+
+.login-logo {
+    height: 100vh;
+    background-color: #1a237e;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar {
+    background-color: #1a237e;
+   /* padding: 10px 30vw*/
+}
+.navbar-toggler {
+    color: white;
+}
+.navbar .nav-link {
+    color: white;
 }

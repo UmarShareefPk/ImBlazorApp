@@ -2,28 +2,36 @@
 @using ImBlazorApp.Data
 @inject IUserService userService
 
- <tr>
-    <td class="text-nowrap" title="@incident.Title"> <a href="#"> @(incident.Title.Length > 30? incident.Title.Substring(0,30) + "..." : incident.Title) </a>  </td>
-    <td class="text-nowrap" title="@incident.Description" >@(incident.Description.Length > 30? incident.Description.Substring(0,30) + "..." : incident.Description) </td>
-    <td class="text-nowrap">@AssignedTo</td>
-    <td class="text-nowrap">@CreatedBy</td>
-    <td class="text-nowrap">@incident.CreatedAT</td>
-    <td class="text-nowrap">@incident.DueDate</td>
-    <td class="text-nowrap">@incident.Status</td>
-  </tr>
+<tr>
+    <td class="text-nowrap" title="@incident.Title"> 
+            <a href="#"> @(incident.Title.Length > 20? incident.Title.Substring(0,20) + "..." : incident.Title) </a>  
+        </td>
+    <td class="text-nowrap text-muted" title="@incident.Description">@(incident.Description.Length > 20? incident.Description.Substring(0,20) + "..." : incident.Description) </td>
+    <td class="text-nowrap text-muted">@assignedTo</td>
+    <td class="text-nowrap text-muted">@createdBy</td>
+    <td class="text-nowrap text-muted">@createdAt</td>
+    <td class="text-nowrap text-muted">@dueDate</td>
+    <td class="text-nowrap">@status</td>
+</tr>
 
 @code {
     [Parameter]
     public Incident incident { get; set; }
-    string AssignedTo = "";
-    string CreatedBy = "";
+    string assignedTo = "";
+    string createdBy = "";
+    string createdAt = "";
+    string dueDate = "";
+    string status = "";
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            AssignedTo = await userService.GetUserNameById(incident.AssignedTo);
-            CreatedBy = await userService.GetUserNameById(incident.CreatedBy);
+            assignedTo = await userService.GetUserNameById(incident.AssignedTo);
+            createdBy = await userService.GetUserNameById(incident.CreatedBy);
+            createdAt = new(await JS.InvokeAsync<string>("getMoment", incident.CreatedAT));
+            dueDate = new(await JS.InvokeAsync<string>("getMoment", incident.DueDate));
+            status = Common.GetStatusNameByCode(incident.Status);
             StateHasChanged();
         }
     }

@@ -1,5 +1,6 @@
 ﻿@inherits LayoutComponentBase
 @inject Blazored.LocalStorage.ILocalStorageService localStorage
+@inject NavigationManager _navManager
 
 <div class="page">
     @if(!string.IsNullOrEmpty(token) )
@@ -10,11 +11,15 @@
     }
 
     <div class="main">
-    @*    <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>*@
+        @if (!string.IsNullOrEmpty(token))
+        {
+            @*<div class="top-row px-4">
+                <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+            </div>*@
+            <Navbar></Navbar>
+        }
 
-        <div class="content">
+        <div class="">
             @Body
         </div>
     </div>
