@@ -1,12 +1,14 @@
 ﻿@page "/Incidents"
 @using IM.Models
 
-@inject IHttpClientFactory ClientFactory
-@inject IConfiguration configuration
-
-
 <div class="container px-8">
+    <br />
     <h1>Incidents</h1>
+    <br />
+
+    <input type="text" class="line-textbox w-50" placeholder="Search" />
+    <br />
+
 <div class="table-responsive">
     <table class="table">
         <thead>
@@ -33,7 +35,7 @@
 
     </table>
 </div>
-    <Pagination></Pagination>
+    <Pagination pageNumber="@pageNumber" totalRecords="@totalRecords" pageSizeOrNumberChanged="ReloadIncidents"></Pagination>
 
 </div>
 
@@ -42,22 +44,40 @@
     //int PageSize, int PageNumber, string SortBy, string SortDirection, string Search;
     List<Incident> incidents;
     IncidentPages incidentPages;
+    int totalRecords;
+    int pageNumber = 1;
+    int pageSize;
+
     protected override async Task OnInitializedAsync()
     {
+    }
 
+    private async Task ReloadIncidents(dynamic pageInfo)
+    {
+        pageSize = pageInfo.pSize;
+        pageNumber = pageInfo.pNumber;
 
+         GetIncidents(pageSize, pageNumber, "");
+         StateHasChanged();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            string token = await localStorage.GetItemAsync<string>("token");
+            GetIncidents(5, 1, "");
+           
+        }
+    }
+
+    private async Task GetIncidents(int pageSize, int pageNumber, string search)
+    {
+          string token = await localStorage.GetItemAsync<string>("token");
             var request = new HttpRequestMessage(HttpMethod.Get,
-             configuration.GetSection("APIURL").Value + "/Incidents/GetIncidentsWithPage?PageSize=10&PageNumber=1&SortBy=a&SortDirection=a&Search=");
+             configuration.GetSection("APIURL").Value + "/Incidents/GetIncidentsWithPage?PageSize=" + pageSize + "&PageNumber=" + pageNumber + "&SortBy=a&SortDirection=a&Search="+ search);
 
             request.Headers.Add("Authorization", "Bearer " + token);
-           
+
 
             var client = ClientFactory.CreateClient();
 
@@ -68,13 +88,13 @@
                 using var responseStream = await response.Content.ReadAsStreamAsync();
                 incidentPages = await JsonSerializer.DeserializeAsync<IncidentPages>(responseStream);
                 incidents = incidentPages.Incidents;
+                totalRecords = incidentPages.Total_Incidents;
+                 StateHasChanged();
             }
             else
             {
 
             }
-            StateHasChanged();
-        }
     }
 
      

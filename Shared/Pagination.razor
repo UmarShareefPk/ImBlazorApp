@@ -1,38 +1,83 @@
 ﻿
-<div class="row">
-    <div class="col-sm-12 col-md-4">
-        <div  id="info" class="text-success records-info">Showin from 1 to 5 of 64 records (13 pages)</div>
+<div class="page-container">
+    <div class="">
+        <div id="info" class="text-muted">Showin from 1 to 5 of @totalRecords records (@totalPages pages)</div>
     </div>
-    <div  class="col-sm-12 col-md-2">
-        <div  style="margin-top: 5px;">
-            <span >Page Size :</span>
-            <select  id="pageSizeDdl" class="browser-default dropdown-custom">
-                <option value="5" selected="" >5</option>
-                <option value="10" >10</option>
-                <option value="20" >20</option>
-                <option value="30" >30</option>
-                <option value="40" >40</option>
-                <option value="50" >50</option>
+    <div class="">
+        <div>
+            <span class="text-muted">Page Size :</span>
+            <select @onchange="sizeChanged"  class="line-textbox  browser-default dropdown-custom">
+                <option value="5" selected="">5</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+                <option value="50">50</option>
                 <option value="100">100</option>
             </select>
-           </div>
-           </div>
-           <div _ngcontent-luy-c78="" class="col-sm-12 col-md-6">
+        </div>
+    </div>
+    <div class="">
         <nav>
             <ul class="pagination justify-content-end">
-                <li class="page-item"><a  href="#" class="page-link">Previous</a></li>
-              
-                <li class="page-item"><a  href="#" class="page-link active"> 1 </a></li>
-                <li class="page-item"><a  href="#" class="page-link"> 2 </a></li>
-                <li class="page-item"><a  href="#" class="page-link"> 3 </a></li>
-                <li class="page-item"><a  href="#" class="page-link"> 4 </a></li>              
-                <li  class="page-item"><span  class="page-link">...</span></li>               
-                <li  class="page-item"><a _ href="#" class="page-link">Next</a></li>
+                <li class="page-item"><a href="#" class="page-link">Previous</a></li>
+                @for(int i = 1; i<=totalPages; i++)
+                {
+                        var tempint = i;
+                    string pageClass = "";
+                    if(tempint == pageNumber)
+                    {
+                        pageClass = "page-item active";
+                    } 
+                    else
+                    {
+                        pageClass = "page-item";
+                    }
+                    <li class="@pageClass"><a @onclick="(num)=>numberChanged(tempint)" class="page-link active"> @i </a></li>
+                }
+                @*
+                <li class="page-item"><a href="#" class="page-link active"> 1 </a></li>
+               *@
+                <li class="page-item"><span class="page-link">...</span></li>
+                <li class="page-item"><a _ href="#" class="page-link">Next</a></li>
             </ul>
         </nav>
     </div>
 </div>
 
 @code {
+
+
+    [Parameter]
+    public EventCallback<dynamic> pageSizeOrNumberChanged { get; set; }
+
+    [Parameter]
+    public int pageNumber { get; set; }
+    [Parameter]
+    public int totalRecords { get; set; }
+
+    public int pageSize { get; set; } = 5;
+
+    int totalPages;
+
+   
+    protected override async Task OnParametersSetAsync()
+    {
+        totalPages = (int)Math.Ceiling( (double)totalRecords/pageSize);
+    }
+
+
+    private void sizeChanged(ChangeEventArgs e)
+    {
+        pageSize = int.Parse(e.Value.ToString());
+        pageSizeOrNumberChanged.InvokeAsync(new {pSize = pageSize, pNumber= pageNumber});
+    }
+
+    private void numberChanged(int number)
+    {
+        pageNumber = number;
+        pageSizeOrNumberChanged.InvokeAsync(new {pSize = pageSize, pNumber= pageNumber});      
+    }
+
 
 }
