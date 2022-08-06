@@ -1,7 +1,8 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /*  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
 }
 
 a, .btn-link {
@@ -113,17 +114,32 @@ a, .btn-link {
     justify-content:space-between;
     align-items:center;
     cursor:pointer;
-    margin-left:0.5vw
+    margin-left:2vw;
+   /* margin-top:0.5vh;*/
 }
 .badge.badge-pill{
     background-color:deeppink;
     color:white;
 }
 
+@media (max-width:980px) {
+    .nav-item.icon {
+        margin-top: 1vh;
+    }
+}
+
 /********************************    Pagination *******************************/
 
 .pagination li a {
     color: #1a237e;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #1a237e;
+}
+
+.pagination li {
+    cursor:pointer;
 }
 /* Small devices  */
 @media (min-width: 300px) {

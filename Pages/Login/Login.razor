@@ -50,6 +50,14 @@
     private string? password;
     private string errorText = "";
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        string token = await localStorage.GetItemAsync<string>("token");
+
+        if (token != null)
+            navigationManager.NavigateTo("/Incidents");
+    }
+
     private async Task Login_click()
     {
         var user = new UserLoginModel();

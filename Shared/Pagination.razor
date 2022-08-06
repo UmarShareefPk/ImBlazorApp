@@ -1,7 +1,7 @@
 ﻿
 <div class="page-container">
     <div class="">
-        <div id="info" class="text-muted">Showin from 1 to 5 of @totalRecords records (@totalPages pages)</div>
+        <div id="info" class="text-muted">Showin from @(pageNumber*pageSize - pageSize + 1) to  @(pageNumber*pageSize) of @totalRecords records (@totalPages pages)</div>
     </div>
     <div class="">
         <div>
@@ -20,26 +20,32 @@
     <div class="">
         <nav>
             <ul class="pagination justify-content-end">
-                <li class="page-item"><a href="#" class="page-link">Previous</a></li>
+                @if (pageNumber > 1)
+                {
+                    <li class="page-item"><a @onclick="movePrevious" class="page-link">Previous</a></li>
+                }
+                @if(pageNumber - 3 > 0)
+                {
+                    <li class="page-item"><span class="page-link">...</span></li>
+                }
                 @for(int i = 1; i<=totalPages; i++)
                 {
-                        var tempint = i;
-                    string pageClass = "";
-                    if(tempint == pageNumber)
+                    var tempint = i;
+                    string pageClass = tempint == pageNumber ? "page-item active" : "page-item";
+                    if(tempint > pageNumber - 3 && tempint < pageNumber + 3)
                     {
-                        pageClass = "page-item active";
-                    } 
-                    else
-                    {
-                        pageClass = "page-item";
-                    }
-                    <li class="@pageClass"><a @onclick="(num)=>numberChanged(tempint)" class="page-link active"> @i </a></li>
+                         <li class="@pageClass"><a @onclick="(num)=>numberChanged(tempint)" class="page-link"> @i </a></li>
+                    }                   
                 }
-                @*
-                <li class="page-item"><a href="#" class="page-link active"> 1 </a></li>
-               *@
-                <li class="page-item"><span class="page-link">...</span></li>
-                <li class="page-item"><a _ href="#" class="page-link">Next</a></li>
+                @if(totalPages > pageNumber + 3)
+                {
+                    <li class="page-item"><span class="page-link">...</span></li>
+                }
+              
+                @if (pageNumber < totalPages)
+                {
+                    <li class="page-item"><a @onclick="moveNext" class="page-link">Next</a></li>
+                }
             </ul>
         </nav>
     </div>
@@ -56,28 +62,40 @@
     [Parameter]
     public int totalRecords { get; set; }
 
+    [Parameter]
     public int pageSize { get; set; } = 5;
 
     int totalPages;
 
-   
+
     protected override async Task OnParametersSetAsync()
     {
         totalPages = (int)Math.Ceiling( (double)totalRecords/pageSize);
     }
 
 
-    private void sizeChanged(ChangeEventArgs e)
+    private async Task sizeChanged(ChangeEventArgs e)
     {
         pageSize = int.Parse(e.Value.ToString());
-        pageSizeOrNumberChanged.InvokeAsync(new {pSize = pageSize, pNumber= pageNumber});
+        await pageSizeOrNumberChanged.InvokeAsync(new {pSize = pageSize, pNumber= pageNumber});
     }
 
-    private void numberChanged(int number)
+    private async Task numberChanged(int number)
     {
         pageNumber = number;
-        pageSizeOrNumberChanged.InvokeAsync(new {pSize = pageSize, pNumber= pageNumber});      
+        await pageSizeOrNumberChanged.InvokeAsync(new {pSize = pageSize, pNumber= pageNumber});      
     }
 
+    private async Task moveNext()
+    {
+        pageNumber = pageNumber + 1;
+        await pageSizeOrNumberChanged.InvokeAsync(new {pSize = pageSize, pNumber= pageNumber});      
+    }
+
+    private async Task movePrevious()
+    {
+        pageNumber = pageNumber - 1;
+        await pageSizeOrNumberChanged.InvokeAsync(new {pSize = pageSize, pNumber= pageNumber});      
+    }
 
 }

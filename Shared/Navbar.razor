@@ -19,7 +19,7 @@
                    <i class="fa fa-bell"></i>
                    <span class="badge badge-pill">5 new</span>
                 </li>
-                <li class="nav-item icon">
+                <li class="nav-item icon" @onclick="Logout">
                     <i class="fa fa-sign-out text-danger" title="Log out"></i>
                 </li>
             </ul>
@@ -31,5 +31,13 @@
 </nav>
 
 @code {
+     [Inject]
+    public NavigationManager navigationManager { get; set; }
+
+    private async Task Logout()
+    {
+         await localStorage.RemoveItemAsync("token");
+         navigationManager.NavigateTo("/"); 
+    }
 
 }

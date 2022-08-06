@@ -6,7 +6,9 @@
     <h1>Incidents</h1>
     <br />
 
-    <input type="text" class="line-textbox w-50" placeholder="Search" />
+    <input type="text" @bind="searchTxt"   class="line-textbox w-25" placeholder="Enter title or description and hit Search" />
+    <input type="button"  value="Search" @onclick="SearchTextChanged" class="btn btn-outline-success" />
+    <br />
     <br />
 
 <div class="table-responsive">
@@ -35,7 +37,7 @@
 
     </table>
 </div>
-    <Pagination pageNumber="@pageNumber" totalRecords="@totalRecords" pageSizeOrNumberChanged="ReloadIncidents"></Pagination>
+    <Pagination pageNumber="@pageNumber" pageSize="@pageSize" totalRecords="@totalRecords" pageSizeOrNumberChanged="ReloadIncidents"></Pagination>
 
 </div>
 
@@ -46,7 +48,8 @@
     IncidentPages incidentPages;
     int totalRecords;
     int pageNumber = 1;
-    int pageSize;
+    int pageSize = 5;
+    string searchTxt = "";
 
     protected override async Task OnInitializedAsync()
     {
@@ -57,15 +60,20 @@
         pageSize = pageInfo.pSize;
         pageNumber = pageInfo.pNumber;
 
-         GetIncidents(pageSize, pageNumber, "");
-         StateHasChanged();
+        await GetIncidents(pageSize, pageNumber, searchTxt);
+        StateHasChanged();
+    }
+
+    private async Task SearchTextChanged()
+    {          
+        await GetIncidents(pageSize, pageNumber, searchTxt);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            GetIncidents(5, 1, "");
+           await GetIncidents(5, 1, "");
            
         }
     }

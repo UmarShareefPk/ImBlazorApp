@@ -12,10 +12,7 @@
 
     <div class="main">
         @if (!string.IsNullOrEmpty(token))
-        {
-            @*<div class="top-row px-4">
-                <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-            </div>*@
+        {          
             <Navbar></Navbar>
         }
 
@@ -26,6 +23,9 @@
 </div>
 
 @code {
+    [Inject]
+    public NavigationManager navigationManager { get; set; }
+
     string token = "";
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -33,7 +33,11 @@
         if (firstRender)
         {
             token = await localStorage.GetItemAsStringAsync("token");
+            if (token == null){
+                navigationManager.NavigateTo("/");              
+            }
             StateHasChanged();
+
         }
     }
 
