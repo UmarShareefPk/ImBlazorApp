@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Blazored.LocalStorage;
 using System.Linq;
+using System.Text;
 
 namespace ImBlazorApp.Data
 {
@@ -13,6 +14,7 @@ namespace ImBlazorApp.Data
     {
         Task<List<User>> GetAllUsers(string token);
         Task<string> GetUserNameById(string userId);
+        Task<bool> Authenticate(string username, string password);
     }
 
     public class UserService : IUserService
@@ -26,6 +28,35 @@ namespace ImBlazorApp.Data
             clientFactory = _clientFactory;
             localStorage = _localStorage;
         }
+
+        public async Task<bool> Authenticate(string username, string password)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Post,
+          configuration.GetSection("APIURL").Value + "/Users/authenticate");
+            request.Content = new StringContent(JsonSerializer.Serialize(new { Username = username, Password = password }), Encoding.UTF8, "application/json");
+
+            var client = clientFactory.CreateClient();
+
+            var response = await client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                using var responseStream = await response.Content.ReadAsStreamAsync();
+                var userLoginInfo = await JsonSerializer.DeserializeAsync<UserLogin>(responseStream);
+
+                await localStorage.SetItemAsync("token", userLoginInfo.Token);
+
+                var allUsers = await GetAllUsers(userLoginInfo.Token);
+                await localStorage.SetItemAsync("allUsers", allUsers);
+                return true;
+                              
+            }
+            else            
+               return false;
+            
+            
+        }
+
 
         public async Task<List<User>> GetAllUsers(string token)
         {

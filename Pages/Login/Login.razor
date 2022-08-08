@@ -14,6 +14,9 @@
 
         <div class="col col-xl-6  col-lg-6 col-md-12 col-sm-12">
             <div class="login-container">
+                <div class="d-lg-none text-center m-4">
+                     <img src="/img/logoColored.png" width="50%" />
+                </div>
                 <h4 class="form-group font-weight-bold">Welcome</h4>
                 <br />
                 <h6 class="form-group">Please Login</h6>
@@ -45,7 +48,6 @@
     [Inject]
     public NavigationManager navigationManager { get; set; }
 
-
     private string? username;
     private string? password;
     private string errorText = "";
@@ -60,40 +62,12 @@
 
     private async Task Login_click()
     {
-        var user = new UserLoginModel();
-        user.Username = username;
-        user.Password = password;        
+        bool isLoginSuccess = await userService.Authenticate(username, password);
 
-        var request = new HttpRequestMessage(HttpMethod.Post,
-          configuration.GetSection("APIURL").Value  + "/Users/authenticate");
-        request.Content =new StringContent(JsonSerializer.Serialize(user), Encoding.UTF8, "application/json");
-
-        var client = ClientFactory.CreateClient();
-
-        var response = await client.SendAsync(request);
-
-        if (response.IsSuccessStatusCode)
-        {
-            using var responseStream = await response.Content.ReadAsStreamAsync();
-            var userLoginInfo = await JsonSerializer.DeserializeAsync<UserLogin>(responseStream);
-
-            await localStorage.SetItemAsync("token", userLoginInfo.Token);
-
-            var allUsers = await userService.GetAllUsers(userLoginInfo.Token);
-            await localStorage.SetItemAsync("allUsers", allUsers);
-
-
+        if (isLoginSuccess)
             navigationManager.NavigateTo("/Incidents");
-        }
         else
-        {
-            errorText = "Invalid username or password.";            
-        }
-
-        
+            errorText = "Invalid username or password.";
     }
-
-
-
 
 }
