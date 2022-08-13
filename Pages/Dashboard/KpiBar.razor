@@ -1,0 +1,34 @@
+﻿<div class="row kpibar">
+    <Kpi ColorClass="new-color" KpiText="New" KpiValue=@newValue ></Kpi>
+    <Kpi ColorClass="inprogress-color" KpiText="In Progress" KpiValue=@inProgressValue ></Kpi>
+    <Kpi ColorClass="closed-color" KpiText="Closed" KpiValue=@closedValue ></Kpi>
+    <Kpi ColorClass="approved-color" KpiText="Approved" KpiValue=@approvedValue ></Kpi>
+    <Kpi ColorClass="late-color" KpiText="Late" KpiValue=@lateValue ></Kpi>
+    <Kpi ColorClass="assignedToMe-color" KpiText="Assigned To Me" KpiValue=@assignedToMeValue ></Kpi>
+</div>
+@code {
+   
+    private string newValue = "0";
+    private string inProgressValue = "0";
+    private string closedValue = "0";
+    private string approvedValue = "0";
+    private string lateValue = "0";
+    private string assignedToMeValue = "0";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            string token = await localStorage.GetItemAsync<string>("token");
+            var kpiData = await DashboardService.GetKpi(token);
+            newValue = kpiData.New.ToString();
+            inProgressValue = kpiData.InProgress.ToString();
+            closedValue = kpiData.Closed.ToString();
+            approvedValue = kpiData.Approved.ToString();
+            lateValue = kpiData.Late.ToString();
+            assignedToMeValue = kpiData.AssignedToMe.ToString();
+            StateHasChanged();
+        }
+    }
+
+}

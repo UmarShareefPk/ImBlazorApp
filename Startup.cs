@@ -34,8 +34,10 @@ namespace ImBlazorApp
             services.AddSingleton<WeatherForecastService>();
             services.AddHttpClient();
             services.AddBlazoredLocalStorage();
-            services.AddScoped<IUserService, UserService>();
+           
             services.AddScoped<ICommon, Common>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IDashboardService, DashboardService>();
 
             services.AddDistributedMemoryCache();
             services.AddSession(options =>

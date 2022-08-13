@@ -3,7 +3,7 @@
 
 <div class="container px-8">
     <br />
-    <h1>Incidents</h1>
+    <div class="report-title">Incidents</div>
     <br />
 
     <input type="text" @bind="searchTxt"   class="line-textbox w-25" placeholder="Enter title or description and hit Search" />
@@ -53,6 +53,8 @@
 
     protected override async Task OnInitializedAsync()
     {
+      //  await JS.InvokeAsync("drawChart", new {name="Umar", age=40});
+    
     }
 
     private async Task ReloadIncidents(dynamic pageInfo)
@@ -74,6 +76,7 @@
         if (firstRender)
         {
            await GetIncidents(5, 1, "");
+          
            
         }
     }
