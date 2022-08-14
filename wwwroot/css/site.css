@@ -230,7 +230,7 @@ a, .btn-link {
     height: 500px;
     min-height: 500px;
     max-height: 500px;
-    overflow: auto;    
+       overflow: auto;    
     margin: 10px;
 }
 
@@ -244,6 +244,12 @@ a, .btn-link {
         font-weight: bold;
     }
 
+.loading-p{
+    background-color:lightgreen;
+    text-align:center;
+    font-size:large;
+}
+
 .incident {
     display: flex;
     flex-direction: row;
@@ -252,6 +258,7 @@ a, .btn-link {
     margin: 20px 0px;
     padding-bottom: 10px;
     border-bottom: 1px dotted;
+    max-width: 100%;
 }
 
 .time-status {
@@ -274,12 +281,13 @@ a, .btn-link {
 .incident .title {
     display: inline-block;
     min-width: 250px;
+    max-width:250px;
     margin-left: 20px;
 }
 
     .incident .title a {
-        font-size: 16px;
-        margin-left: 5px;
+        font-size: small;
+        padding-left: 5px;
         color: #1A237E;
     }
 
@@ -296,6 +304,7 @@ a, .btn-link {
         overflow: auto;
         margin-bottom: 10px;
         height: fit-content;
+        max-width: 100%;
     }
 
     .incident {
@@ -308,10 +317,7 @@ a, .btn-link {
     }
 
 
-        .incident .title a {
-            font-size: 12px;
-            color: #1A237E;
-        }
+    
 }
 
 /* (tablets, 768px and up) */

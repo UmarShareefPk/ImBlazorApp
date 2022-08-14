@@ -57,7 +57,7 @@
         string token = await localStorage.GetItemAsync<string>("token");
 
         if (token != null)
-            navigationManager.NavigateTo("/Incidents");
+            navigationManager.NavigateTo("/Dashboard");
     }
 
     private async Task Login_click()
@@ -65,7 +65,7 @@
         bool isLoginSuccess = await userService.Authenticate(username, password);
 
         if (isLoginSuccess)
-            navigationManager.NavigateTo("/Incidents");
+            navigationManager.NavigateTo("/Dashboard");
         else
             errorText = "Invalid username or password.";
     }

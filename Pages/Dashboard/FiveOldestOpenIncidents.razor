@@ -1,5 +1,35 @@
-﻿<h3>FiveOldestOpenIncidents</h3>
+﻿<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 ">
+    <div class="widget">
+            <h5> 5 Oldest Unresolved Incidents </h5>
+
+        @if (incidents != null)
+        {
+            foreach (Incident incident in incidents)
+            {
+                <IncidentWidgetData incident=incident ></IncidentWidgetData>
+            }
+        }
+        else
+        {
+            <p class="loading-p"> Loading...</p>
+
+        }
+
+    </div>
+</div>
+      
 
 @code {
+    private List<Incident> incidents;
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            string token = await localStorage.GetItemAsync<string>("token");
+            incidents = await DashboardService.GetOldest5UnresolvedIncidents(token);
+
+            StateHasChanged();
+        }
+    }
 }

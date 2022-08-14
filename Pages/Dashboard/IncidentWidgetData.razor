@@ -1,0 +1,39 @@
+﻿  <div class="incident">
+            <div class="time-status">
+                <span class="timestamp"
+                      title="@incident.CreatedAT">
+                    @createdAt
+                </span>
+
+                <span class="status">
+                    @status
+                </span>
+            </div>
+
+            <div class="title">
+                <a href="#" >
+                    @incident.Title
+                </a>
+            </div>
+
+        </div>
+
+@code {
+    [Parameter]
+    public Incident incident { get; set; }
+    string createdAt = "";
+    string status = "";
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            createdAt = new(await JS.InvokeAsync<string>("getMoment", incident.CreatedAT));
+            status = Common.GetStatusNameByCode(incident.Status);
+            StateHasChanged();
+        }
+
+    }
+
+}
