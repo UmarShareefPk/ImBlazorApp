@@ -1,7 +1,9 @@
 ﻿
 <div class="page-container">
     <div class="">
-        <div id="info" class="text-muted">Showin from @(pageNumber*pageSize - pageSize + 1) to  @(pageNumber*pageSize) of @totalRecords records (@totalPages pages)</div>
+        <div id="info" class="text-muted">
+            Showin from @(pageNumber*pageSize - pageSize + 1) to  
+            @( pageNumber*pageSize < totalRecords? pageNumber*pageSize : totalRecords) of @totalRecords records (@totalPages pages)</div>
     </div>
     <div class="">
         <div>
@@ -77,6 +79,7 @@
     private async Task sizeChanged(ChangeEventArgs e)
     {
         pageSize = int.Parse(e.Value.ToString());
+        pageNumber = 1;
         await pageSizeOrNumberChanged.InvokeAsync(new {pSize = pageSize, pNumber= pageNumber});
     }
 

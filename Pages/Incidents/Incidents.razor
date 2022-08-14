@@ -25,13 +25,20 @@
             </tr>
         </thead>
         <tbody>
-            @if(incidents != null)
-            {
-                @foreach(Incident incident in incidents)
+                @if (incidents != null)
                 {
-                     <IncidentRow incident="@incident"></IncidentRow>
+                    @foreach (Incident incident in incidents)
+                    {
+                        <IncidentRow incident="@incident"></IncidentRow>
+                    }
                 }
-            }           
+                else
+                {
+                    <tr>
+                        <td colspan="7"> <p class="loading-p"> Loading...</p></td>
+                    </tr>
+
+                }
         
         </tbody>
 

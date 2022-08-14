@@ -1,0 +1,23 @@
+﻿<tr>   
+    <td class="text-nowrap text-muted">@user.FirstName</td>
+    <td class="text-nowrap text-muted">@user.LastName</td>
+    <td class="text-nowrap text-muted">@user.Email</td>
+    <td class="text-nowrap text-muted">@createdAt</td>    
+</tr>
+
+@code {
+    [Parameter]
+    public User user { get; set; }
+    string createdAt = "";
+    
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            createdAt = new(await JS.InvokeAsync<string>("getMoment", user.CreateDate));
+            StateHasChanged();
+        }
+    }
+
+}

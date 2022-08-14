@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Blazored.LocalStorage;
 using System.Linq;
 using System.Text;
+using ImBlazorApp.Models;
 
 namespace ImBlazorApp.Data
 {
@@ -15,6 +16,8 @@ namespace ImBlazorApp.Data
         Task<List<User>> GetAllUsers(string token);
         Task<string> GetUserNameById(string userId);
         Task<bool> Authenticate(string username, string password);
+        Task<UserPages> GetUsersWithPage(string token, int pageSize, int pageNumber, string search);
+
     }
 
     public class UserService : IUserService
@@ -52,12 +55,9 @@ namespace ImBlazorApp.Data
                               
             }
             else            
-               return false;
-            
+               return false;            
             
         }
-
-
         public async Task<List<User>> GetAllUsers(string token)
         {
             var request = new HttpRequestMessage(HttpMethod.Get,
@@ -78,10 +78,33 @@ namespace ImBlazorApp.Data
             }
             else
             {
-
             }
 
             return users;
+        }
+
+        public async Task<UserPages> GetUsersWithPage(string token, int pageSize, int pageNumber, string search)
+        {           
+            var request = new HttpRequestMessage(HttpMethod.Get,
+             configuration.GetSection("APIURL").Value + "/Users/GetUsersWithPage?PageSize=" + pageSize + "&PageNumber=" + pageNumber + "&SortBy=a&SortDirection=a&Search=" + search);
+
+            request.Headers.Add("Authorization", "Bearer " + token);
+
+
+            var client = clientFactory.CreateClient();
+
+            var response = await client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                using var responseStream = await response.Content.ReadAsStreamAsync();
+                var userPages = await JsonSerializer.DeserializeAsync<UserPages>(responseStream);
+                return userPages;
+            }
+            else
+            {
+                return null;
+            }     
         }
 
         public async Task<string> GetUserNameById(string userId)
