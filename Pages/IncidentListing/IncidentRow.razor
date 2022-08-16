@@ -4,7 +4,7 @@
 
 <tr>
     <td class="text-nowrap" title="@incident.Title"> 
-            <a href="#"> @(incident.Title.Length > 20? incident.Title.Substring(0,20) + "..." : incident.Title) </a>  
+            <a href="/IncidentDetails/@incident.Id"> @(incident.Title.Length > 20? incident.Title.Substring(0,20) + "..." : incident.Title) </a>  
         </td>
     <td class="text-nowrap text-muted" title="@incident.Description">@(incident.Description.Length > 20? incident.Description.Substring(0,20) + "..." : incident.Description) </td>
     <td class="text-nowrap text-muted">@assignedTo</td>

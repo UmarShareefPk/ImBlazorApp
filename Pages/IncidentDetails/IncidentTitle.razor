@@ -1,0 +1,23 @@
+﻿<div class="title-container">
+    <div class="incident-title">
+       <i class="fa fa-pen"></i>
+       <p> @title </p>
+    </div>
+    
+     <div class="incident-createTime ">
+       <p > Created by <span class="text-primary">Umar Shareef</span> 2 days ago </p>
+    </div>
+
+</div>
+
+@code {
+    [Parameter]
+    public string incidentId { get; set; }
+    [Parameter]
+    public string title { get; set; }
+    [Parameter]
+    public DateTime createDate { get; set; }
+
+  
+
+}

@@ -38,6 +38,7 @@ namespace ImBlazorApp
             services.AddScoped<ICommon, Common>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IDashboardService, DashboardService>();
+            services.AddScoped<IIncidentService, IncidentService>();
 
             services.AddDistributedMemoryCache();
             services.AddSession(options =>

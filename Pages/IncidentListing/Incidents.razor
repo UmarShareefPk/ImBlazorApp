@@ -37,7 +37,6 @@
                     <tr>
                         <td colspan="7"> <p class="loading-p"> Loading...</p></td>
                     </tr>
-
                 }
         
         </tbody>
@@ -49,19 +48,15 @@
 </div>
 
 @code {
-
-    //int PageSize, int PageNumber, string SortBy, string SortDirection, string Search;
+    
     List<Incident> incidents;
-    IncidentPages incidentPages;
     int totalRecords;
     int pageNumber = 1;
     int pageSize = 5;
     string searchTxt = "";
 
     protected override async Task OnInitializedAsync()
-    {
-      //  await JS.InvokeAsync("drawChart", new {name="Umar", age=40});
-    
+    {       
     }
 
     private async Task ReloadIncidents(dynamic pageInfo)
@@ -82,37 +77,17 @@
     {
         if (firstRender)
         {
-           await GetIncidents(5, 1, "");
-          
-           
+            await GetIncidents(5, 1, "");
         }
     }
 
     private async Task GetIncidents(int pageSize, int pageNumber, string search)
     {
-          string token = await localStorage.GetItemAsync<string>("token");
-            var request = new HttpRequestMessage(HttpMethod.Get,
-             configuration.GetSection("APIURL").Value + "/Incidents/GetIncidentsWithPage?PageSize=" + pageSize + "&PageNumber=" + pageNumber + "&SortBy=a&SortDirection=a&Search="+ search);
-
-            request.Headers.Add("Authorization", "Bearer " + token);
-
-
-            var client = ClientFactory.CreateClient();
-
-            var response = await client.SendAsync(request);
-
-            if (response.IsSuccessStatusCode)
-            {
-                using var responseStream = await response.Content.ReadAsStreamAsync();
-                incidentPages = await JsonSerializer.DeserializeAsync<IncidentPages>(responseStream);
-                incidents = incidentPages.Incidents;
-                totalRecords = incidentPages.Total_Incidents;
-                 StateHasChanged();
-            }
-            else
-            {
-
-            }
+        string token = await localStorage.GetItemAsync<string>("token");     
+        var incidentPages = await IncidentService.GetIncidentsWithPage(token, pageSize, pageNumber, search);
+        incidents = incidentPages.Incidents;
+        totalRecords = incidentPages.Total_Incidents;
+        StateHasChanged();
     }
 
      

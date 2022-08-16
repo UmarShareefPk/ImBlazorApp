@@ -1,0 +1,47 @@
+﻿@page "/IncidentDetails"
+@page "/IncidentDetails/{incidentId}"
+
+<div class="container px-8">
+    <br />
+    <div class="report-title">Incident Details</div>
+    <br />
+
+    @if(incidentId is null)
+    {
+        <h1 class="text-danger">Please pass incident ID</h1>
+    }
+    else
+    {        
+        if(incident is null)
+        {
+            <p class="loading-p"> Loading...</p>
+        }
+        else
+        {
+           <div class="row">
+                <div class="col col-xl-12  col-lg-12 col-md-12 col-sm-12">
+                    <IncidentTitle incidentId="@incidentId" title="@incident.Title" createDate="@incident.CreatedAT" ></IncidentTitle>
+                </div>
+           </div>
+        }
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string incidentId { get; set; }
+
+    private Incident incident;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            string token = await localStorage.GetItemAsync<string>("token");     
+            incident = await IncidentService.GetIncidentById(token, incidentId);
+            StateHasChanged();
+        }
+    }
+
+
+}

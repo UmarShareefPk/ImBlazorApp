@@ -456,3 +456,33 @@ a, .btn-link {
         font-size: 12px;
     }
 }
+
+/****************************************    Incident Details  **********************************/
+
+.title-container{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    width:100%;
+    
+}
+
+.incident-title{
+    display:flex;
+    flex-direction:row;
+    width:100%;
+    font-size:x-large;
+    color:darkblue;
+}
+.incident-title i {
+    padding-top:10px;
+    margin-right:5px;
+    color:gray;
+    font-size:medium;
+    cursor:pointer;
+}
+
+.incident-createTime{
+    font-size:small;
+    color:gray;
+}
