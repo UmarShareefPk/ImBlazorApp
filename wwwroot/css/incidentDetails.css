@@ -10,13 +10,20 @@
     font-size:xx-large;
 }
 
-    .edit-buttons .fa-close {
-        color: orange;
-        font-size: xx-large;
-    }
+.edit-buttons .fa-close {
+    color: orange;
+    font-size: xx-large;
+}
+
+.edit-btn.fa-pen {
+    color: gray;
+    font-size: medium;
+    margin-left:1vw;
+    cursor:pointer;
+}
 
 
-
+/*********** title**********/
 
 .title-container {
     display: flex;
@@ -27,28 +34,104 @@
 
 .title-text-div{
     display:flex;
-
-
 }
 
 .incident-title {
     display: flex;
     flex-direction: column;
     width: 100%;
-    font-size: x-large;
+    font-size: large;
     color: darkblue;
 }
 
-    .incident-title i {
-        padding-top: 10px;
-        margin-right: 5px;
-        color: gray;
-        font-size: medium;
-        cursor: pointer;
-    }
+.incident-title i {
+    padding-top: 5px;
+    margin-right: 5px;
+    color: gray;
+    font-size: medium;
+    cursor: pointer;
+}
 
 .incident-createTime {
     font-size: small;
     color: gray;
     text-align:right;
 }
+
+/*********** description **********/
+.field-title{
+    font-weight:bold;
+    color:darkblue;
+      
+}
+.description-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.description-text-div {
+    display: flex;
+}
+.description-text-div p {
+    max-height:10vh;
+    overflow-y:auto;
+    width:100%;
+}
+
+.incident-description {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-size: medium;
+    color: #808080;
+}
+
+.incident-description i {
+    padding-top: 10px;
+    margin-right: 5px;
+    color: gray;
+    font-size: medium;
+    cursor: pointer;
+}
+
+/********* Files *****/
+
+.files-container{
+    margin-top:1vh;
+    display:flex;
+    flex-direction:column;
+}
+.files-container .file-box {
+    display:flex;
+    justify-content:space-between;
+    font-size: small; 
+    line-height:2;
+    
+}
+.files-container .file-box .file-name {
+    color:gray;
+}
+.files-container .file-box .file-name i {
+    color: orange;
+}
+.files-container .file-box .file-actions {
+    font-size:medium;
+}
+.files-container .fa-download {
+    cursor:pointer;
+    color: blue;
+}
+.files-container .fa-trash {
+    margin-left: 0.5vw;
+    cursor: pointer;
+    color: red;
+}
+
+/*
+.field{
+    display:flex;
+    justify-content:space-between;
+    wid
+}*/

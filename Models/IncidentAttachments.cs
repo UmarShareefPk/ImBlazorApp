@@ -5,7 +5,7 @@ using System.Web;
 
 namespace IM.Models
 {
-    public class IncidentAttachments
+    public class IncidentAttachment
     {
         public string Id { get; set; }
         public string FileName { get; set; }

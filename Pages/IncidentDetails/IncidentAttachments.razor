@@ -1,5 +1,30 @@
-﻿<h3>IncidentAttachments</h3>
+﻿<div class="field-title">Attachments 
+</div>
+<div class="files-container">
+    @if(attachments is not null && attachments.Count > 0)
+    {
+        foreach(IncidentAttachment file in attachments)
+        {
+            <div class="file-box">
+                <div class="file-name">
+                    <i class="fa fa-file"></i>
+                    <span class="text-nowrap" title="@file.FileName"> @(file.FileName.Length >40? file.FileName.Substring(0,40) + "...": file.FileName)</span>
+                </div>
+                <div class="file-actions">
+                    <i title="Download file" class="fa fa-download"></i>
+                    <i title="Delete file" class="fa fa-trash"></i>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <p class="text-muted">This incident has no attachments.</p>
+    }
+</div>
 
 @code {
+    [Parameter]
+    public List<IncidentAttachment> attachments { get; set; }
 
 }

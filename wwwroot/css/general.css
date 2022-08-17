@@ -12,6 +12,12 @@
     color: #34495e;
     line-height:1;
 }
+.line-textbox:focus {
+    border: none;
+    border-bottom: 1px solid #9e9e9e;
+    color: #34495e;
+    line-height: 1;
+}
 
 .report-title {
     font-size: x-large;
