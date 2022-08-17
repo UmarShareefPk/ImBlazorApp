@@ -15,6 +15,7 @@ namespace ImBlazorApp.Data
     {
         Task<IncidentPages> GetIncidentsWithPage(string token, int pageSize, int pageNumber, string search);
         Task<Incident> GetIncidentById(string token, string incidentId);
+        Task<bool> UpdateIncident(string token, object parameters);
     }
 
     public class IncidentService : IIncidentService
@@ -75,6 +76,32 @@ namespace ImBlazorApp.Data
             else
             {
                 return null;
+            }
+        }
+
+        public async Task<bool> UpdateIncident(string token, object parameters)
+        {
+            var request = new HttpRequestMessage(HttpMethod.Post,
+            configuration.GetSection("APIURL").Value + "/Incidents/UpdateIncident");
+            request.Content = new StringContent(JsonSerializer.Serialize(parameters), Encoding.UTF8, "application/json");
+
+
+            request.Headers.Add("Authorization", "Bearer " + token);
+
+
+            var client = clientFactory.CreateClient();
+
+            var response = await client.SendAsync(request);
+
+            if (response.IsSuccessStatusCode)
+            {
+                //using var responseStream = await response.Content.ReadAsStreamAsync();
+                //var incident = await JsonSerializer.DeserializeAsync<Incident>(responseStream);
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 

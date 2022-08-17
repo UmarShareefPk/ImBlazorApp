@@ -18,11 +18,18 @@
         }
         else
         {
-           <div class="row">
+               <div class="row">
                 <div class="col col-xl-12  col-lg-12 col-md-12 col-sm-12">
-                    <IncidentTitle incidentId="@incidentId" title="@incident.Title" createDate="@incident.CreatedAT" ></IncidentTitle>
+                    <div class="incident-createTime ">
+                        Created by <span class="text-primary">Umar Shareef</span> 2 days ago
+                    </div>
                 </div>
-           </div>
+                </div>
+            <div class="row">              
+                <div class="col col-xl-12  col-lg-12 col-md-12 col-sm-12">
+                    <IncidentTitle incidentId="@incidentId" title="@incident.Title" createDate="@incident.CreatedAT"></IncidentTitle>
+                </div>
+            </div>
         }
     }
 </div>

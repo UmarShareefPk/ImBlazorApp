@@ -1,0 +1,65 @@
+﻿/* ***********************   Nav ***************************/
+
+.navbar {
+    background: rgb(117,32,112);
+    background: linear-gradient(0deg, rgba(117,32,112,1) 10%, rgba(12,0,106,1) 60%);
+    /* padding: 10px 30vw*/
+}
+
+.navbar-toggler {
+    color: white;
+}
+
+.navbar .nav-link {
+    color: white;
+}
+
+.nav-item i {
+    color: white;
+}
+
+.nav-item.icon {
+    display: flex;
+    width: 2.5vw;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    /* margin-top:0.5vh;*/
+}
+
+.badge.badge-pill {
+    background: rgb(6,85,9);
+    background: linear-gradient(90deg, rgba(6,85,9,1) 50%, rgba(26,199,42,1) 80%);
+    color: white;
+}
+
+.logout-icon {
+    color: orangered !important;
+}
+
+@media (max-width:980px) {
+    .nav-item.icon {
+        margin-top: 1vh;
+    }
+}
+
+/* Small devices  */
+@media (min-width: 300px) {
+}
+
+/* (tablets, 768px and up) */
+@media (min-width: 700px) {
+}
+
+/* Large Tablets  */
+@media (min-width: 1000px) {
+    .nav-item.icon {
+        margin-left: 30px;
+        /* margin-top:0.5vh;*/
+    }
+}
+
+/* Computer */
+@media (min-width: 1500px) {
+}

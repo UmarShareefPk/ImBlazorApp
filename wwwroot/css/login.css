@@ -1,0 +1,30 @@
+﻿/********************************* Login Page ****************************/
+
+.login-page {
+    width: 100vw;
+    color: #1a237e;
+    overflow: hidden;
+}
+
+.login-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+    /*  background-color: #1a237e;*/
+}
+
+    .login-container .form-group {
+        width: 60%;
+    }
+
+.login-logo {
+    height: 100vh;
+    background: rgb(117,32,112);
+    background: linear-gradient(0deg, rgba(117,32,112,1) 0%, rgba(12,0,106,1) 88%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

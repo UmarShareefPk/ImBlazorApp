@@ -1,0 +1,54 @@
+﻿
+/****************************************    Incident Details  **********************************/
+
+.edit-buttons {
+    text-align:right;
+}
+
+.edit-buttons .fa-check {
+    color:green;
+    font-size:xx-large;
+}
+
+    .edit-buttons .fa-close {
+        color: orange;
+        font-size: xx-large;
+    }
+
+
+
+
+.title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.title-text-div{
+    display:flex;
+
+
+}
+
+.incident-title {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    font-size: x-large;
+    color: darkblue;
+}
+
+    .incident-title i {
+        padding-top: 10px;
+        margin-right: 5px;
+        color: gray;
+        font-size: medium;
+        cursor: pointer;
+    }
+
+.incident-createTime {
+    font-size: small;
+    color: gray;
+    text-align:right;
+}

@@ -25,17 +25,20 @@ namespace ImBlazorApp.Data
         private readonly IConfiguration configuration;
         private readonly IHttpClientFactory clientFactory;
         private readonly ILocalStorageService localStorage;
-        public DashboardService(IConfiguration _configuration, IHttpClientFactory _clientFactory, ILocalStorageService _localStorage)
+        private readonly IUserService userService;
+        public DashboardService(IConfiguration _configuration, IHttpClientFactory _clientFactory, ILocalStorageService _localStorage, IUserService _userService)
         {
             configuration = _configuration;
             clientFactory = _clientFactory;
             localStorage = _localStorage;
+            userService = _userService;
         }
 
         public async Task<KpiData> GetKpi(string token)
         {
+            string loggedInUser = await userService.GetLoggedInUserId();
             var request = new HttpRequestMessage(HttpMethod.Get,
-                configuration.GetSection("APIURL").Value + "/Incidents/KPI?userId=" + "16819E79-25A3-46C9-8B1F-8FB6C6F8AC61");
+                configuration.GetSection("APIURL").Value + "/Incidents/KPI?userId=" + loggedInUser);
 
             request.Headers.Add("Authorization", "Bearer " + token);
 

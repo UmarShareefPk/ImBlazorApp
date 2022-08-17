@@ -17,6 +17,7 @@ namespace ImBlazorApp.Data
         Task<string> GetUserNameById(string userId);
         Task<bool> Authenticate(string username, string password);
         Task<UserPages> GetUsersWithPage(string token, int pageSize, int pageNumber, string search);
+        Task<string> GetLoggedInUserId();
 
     }
 
@@ -51,6 +52,8 @@ namespace ImBlazorApp.Data
 
                 var allUsers = await GetAllUsers(userLoginInfo.Token);
                 await localStorage.SetItemAsync("allUsers", allUsers);
+                await localStorage.SetItemAsync("loggedInUserId", userLoginInfo.user.Id);
+
                 return true;
                               
             }
@@ -110,10 +113,13 @@ namespace ImBlazorApp.Data
         public async Task<string> GetUserNameById(string userId)
         {
             List<User> users = await localStorage.GetItemAsync<List<User>>("allUsers");
-
             var user = users.Where(user => user.Id == userId).FirstOrDefault();
-
             return user.FirstName + " " + user.LastName;
+        }
+
+        public async Task<string> GetLoggedInUserId()
+        {
+           return await localStorage.GetItemAsync<string>("loggedInUserId");
         }
 
     }

@@ -1,0 +1,232 @@
+﻿/**************************** Dashboard *****************************/
+
+.widget {
+    border: 1px solid gray;
+    border-radius: 20px;
+    padding: 0 20px;
+    height: 500px;
+    min-height: 500px;
+    max-height: 500px;
+    overflow: auto;
+    margin: 10px;
+}
+
+    .widget h5 {
+        /*background: linear-gradient(0deg, rgba(26,35,126,1) 25%, rgba(253,187,45,1) 100%);*/
+        /*   -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;*/
+        text-align: center;
+        margin-top: 10px;
+        font-size: large;
+        font-weight: bold;
+    }
+
+.loading-p {
+    background-color: lightgreen;
+    text-align: center;
+    font-size: large;
+}
+
+.incident {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin: 20px 0px;
+    padding-bottom: 10px;
+    border-bottom: 1px dotted;
+    max-width: 100%;
+}
+
+.time-status {
+    display: flex;
+    flex-direction: column;
+    color: indigo;
+}
+
+.incident .timestamp {
+    white-space: nowrap;
+    font-size: small;
+    color: gray;
+}
+
+.incident .status {
+    white-space: nowrap;
+    font-size: small;
+}
+
+.incident .title {
+    display: inline-block;
+    min-width: 250px;
+    max-width: 250px;
+    margin-left: 20px;
+}
+
+    .incident .title a {
+        font-size: small;
+        padding-left: 5px;
+        color: #1A237E;
+    }
+
+    .incident .title:hover {
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+
+/* Small devices  */
+@media (min-width: 300px) {
+    .widget {
+        padding: 0 10px;
+        overflow: auto;
+        margin-bottom: 10px;
+        height: fit-content;
+        max-width: 100%;
+    }
+
+    .incident {
+        width: 100vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        border-bottom: 1px dotted;
+    }
+}
+
+/* (tablets, 768px and up) */
+@media (min-width: 700px) {
+}
+
+/* Large Tablets  */
+@media (min-width: 990px) {
+    .widget {
+        padding: 0 10px;
+        overflow: auto;
+        margin-bottom: 10px;
+        height: 500px;
+    }
+}
+
+/* Computer */
+@media (min-width: 1500px) {
+}
+
+/********* KPIBar*/
+
+.kpibar {
+    border: 1px solid gray;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.kpi {
+    padding-right: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1A237E;
+    padding: 25px 10px;
+    border-radius: 30px;
+    color: white;
+}
+
+.kpi-text {
+    white-space: nowrap;
+}
+
+.new-color {
+    background: rgb(183,28,28);
+    background: linear-gradient(90deg, rgba(245,124,0,1) 52%, rgba(255,226,0,1) 100%);
+}
+
+.inprogress-color {
+    background: rgb(183,28,28);
+    background: linear-gradient(90deg, rgba(25,118,210,1) 70%, rgba(0,237,255,1) 100%);
+}
+
+.closed-color {
+    background: rgb(183,28,28);
+    background: linear-gradient(90deg, rgba(67,160,71,1) 52%, rgba(0,255,187,1) 100%);
+}
+
+.approved-color {
+    background: rgb(183,28,28);
+    background: linear-gradient(90deg, rgba(27,94,32,1) 52%, rgba(19,255,0,1) 100%);
+}
+
+.late-color {
+    background: rgb(183,28,28);
+    background: linear-gradient(90deg, rgba(183,28,28,1) 52%, rgba(255,140,0,1) 100%);
+}
+
+.assignedToMe-color {
+    background: rgb(26,35,126);
+    background: linear-gradient(90deg, rgba(26,35,126,1) 63%, rgba(0,194,255,1) 100%);
+}
+
+
+
+/* Small devices  */
+@media (min-width: 300px) {
+    .kpi-col {
+        width: 50%;
+    }
+
+    .kpi {
+        padding: 10px 0px;
+        margin-bottom: 20px;
+        border-radius: 10%;
+    }
+
+
+    .kpi-value {
+        font-size: 15px;
+        margin-bottom: 5px;
+    }
+
+    .kpi-text {
+        font-size: 10px;
+    }
+}
+
+/* (tablets, 768px and up) */
+@media (min-width: 700px) {
+}
+
+/* Large Tablets  */
+@media (min-width: 1000px) {
+    .kpi {
+        padding: 25px 10px;
+        margin-bottom: 0px;
+    }
+
+    .kpi-value {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .kpi-text {
+        font-size: 10px;
+    }
+}
+
+/* Computer */
+@media (min-width: 1500px) {
+    .kpi {
+        padding: 25px 10px;
+        margin-bottom: 0px;
+    }
+
+    .kpi-value {
+        font-size: 25px;
+        margin-bottom: 5px;
+    }
+
+    .kpi-text {
+        font-weight: bold;
+        font-size: 12px;
+    }
+}

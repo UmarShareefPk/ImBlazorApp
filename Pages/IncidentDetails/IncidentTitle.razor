@@ -1,12 +1,23 @@
 ﻿<div class="title-container">
     <div class="incident-title">
-       <i class="fa fa-pen"></i>
-       <p> @title </p>
+        <div class="title-text-div">
+            <i class="fa fa-pen" @onclick="toggleEdit"></i>
+            <p> @title </p>
+        </div>
+        @if (editOn)
+        {
+            <textarea @bind="newTitle" class="line-textbox  "></textarea>
+            <p class="edit-buttons">
+                <i class="fa fa-close" title="Cancel changes" @onclick="cancel"></i>
+                <i class="fa fa-check " title="Save changes" @onclick="update"></i>                                
+            </p>
+        }
+
     </div>
-    
-     <div class="incident-createTime ">
-       <p > Created by <span class="text-primary">Umar Shareef</span> 2 days ago </p>
-    </div>
+
+
+
+   
 
 </div>
 
@@ -18,6 +29,46 @@
     [Parameter]
     public DateTime createDate { get; set; }
 
-  
+    private bool editOn = false;
+    private string newTitle;
+
+    private void toggleEdit()
+    {
+        editOn = !editOn;
+        if(string.IsNullOrEmpty(newTitle))
+            newTitle = title;
+        // StateHasChanged();
+    }
+
+    private async Task update()
+    {
+
+        string token = await localStorage.GetItemAsync<string>("token");  
+        string loggedInUser = await UserService.GetLoggedInUserId();
+
+        bool isSuccess = await IncidentService.UpdateIncident(token, new
+        {
+            IncidentId = incidentId,
+            Parameter = "Title",
+            Value = newTitle,
+            UserId = loggedInUser
+        });
+
+        if (isSuccess)
+        {
+            editOn = !editOn;
+            title = newTitle;
+        }
+
+
+        //StateHasChanged();
+    }
+
+    private void cancel()
+    {
+         editOn = !editOn;
+       // StateHasChanged();
+    }
+
 
 }
