@@ -7,7 +7,11 @@
     <br />
 
     <input type="text" @bind="searchTxt"   class="line-textbox w-25" placeholder="Enter title or description and hit Search" />
-    <input type="button"  value="Search" @onclick="SearchTextChanged" class="btn btn-outline-success" />
+    <button class="btn btn-outline-success" @onclick="SearchTextChanged"> 
+       <i class="fa-solid fa-magnifying-glass"></i>
+        Search
+    </button>
+    @*<input type="button"  value="Search"  class="btn btn-outline-success" />*@
     <br />
     <br />
 

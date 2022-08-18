@@ -1,0 +1,26 @@
+﻿<br />
+<div class="field-title">
+    Comments   
+</div>
+
+@if(comments is nuint)
+{    
+}
+else
+{
+    foreach(Comment c in comments)
+    {
+        <IncidentComment comment="@c"></IncidentComment>
+    }
+}
+
+@code {
+    [Parameter]
+    public List<Comment> comments { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        
+    }
+
+}

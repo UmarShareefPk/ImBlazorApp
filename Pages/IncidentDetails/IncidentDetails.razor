@@ -1,5 +1,6 @@
 ﻿@page "/IncidentDetails"
 @page "/IncidentDetails/{incidentId}"
+@using ImBlazorApp.Pages.IncidentDetails.Comments
 
 <div class="container px-8">
     <br />
@@ -38,6 +39,12 @@
                 </div>
                  <div class="col-xl-6  col-lg-6 col-md-12 col-sm-12">
                    <IncidentFields></IncidentFields>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xl-6  col-lg-6 col-md-12 col-sm-12">
+                    <IncidentComments comments="@incident.Comments">
+                    </IncidentComments>
                 </div>
             </div>
         }

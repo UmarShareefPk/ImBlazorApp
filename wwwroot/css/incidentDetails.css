@@ -40,7 +40,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    font-size: large;
+    font-size: x-large;
     color: darkblue;
 }
 
@@ -99,39 +99,103 @@
 /********* Files *****/
 
 .files-container{
-    margin-top:1vh;
+    margin-top:0vh;
     display:flex;
     flex-direction:column;
 }
-.files-container .file-box {
-    display:flex;
-    justify-content:space-between;
-    font-size: small; 
-    line-height:2;
-    
-}
-.files-container .file-box .file-name {
-    color:gray;
-}
-.files-container .file-box .file-name i {
-    color: orange;
-}
-.files-container .file-box .file-actions {
-    font-size:medium;
-}
-.files-container .fa-download {
+    .files-container .file-box {
+        display: flex;
+        justify-content: space-between;
+        /*margin-right:auto;*/
+        font-size: medium;
+        line-height: 2;
+        border-bottom: dotted 0.5px lightgray;
+    }
+
+        .files-container .file-box .file-name {
+            color: gray;
+        }
+
+            .files-container .file-box .file-name i {
+                color: #cfbf13;
+            }
+
+        .files-container .file-box .file-actions {
+            font-size: medium;
+        }
+.fa-download {
     cursor:pointer;
     color: blue;
 }
-.files-container .fa-trash {
+ .fa-trash {
     margin-left: 0.5vw;
     cursor: pointer;
     color: red;
 }
 
-/*
-.field{
+/******* Fields **********/
+.field-table{
+    line-height:2;
+}
+field-table tr
+{
+    border-bottom:solid 1px black;
+}
+
+/********* Comments ************/
+.comment-box{
     display:flex;
+    flex-direction:column;
+    margin-bottom:10px;
+
+}
+.comment-header{
+    display:flex;
+    flex-direction:row;
     justify-content:space-between;
-    wid
-}*/
+
+}
+.comment-source{
+    color:#808080;
+}
+.comment-source span {
+    color: #007bff;
+}
+
+.comment-actions i{
+    margin-left:5px;
+}
+.comment-actions i.fa-pen {
+    color:gray;
+}
+
+.comment-body{
+    margin: 10px 0px;
+    text-align:center;
+}
+.comment-body span {
+    width: 100%;
+    text-align: center;
+}
+
+.comment-box .file-box {
+    display: flex;
+    justify-content: center;
+    /*margin-right:auto;*/
+    font-size: medium;
+    line-height: 2;
+    border-bottom: dotted 0.5px lightgray;
+}
+
+.comment-box .file-box .file-name {
+    color: gray;
+}
+
+    .comment-box .file-box .file-name i {
+        color: #cfbf13;
+    }
+
+.comment-box .file-box .file-actions {
+    margin-left:10px;
+    font-size: medium;
+}

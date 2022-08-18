@@ -1,0 +1,54 @@
+﻿
+@if(comment is not null)
+{
+    <div class="comment-box">
+        <div class="comment-header">
+            <div class="comment-source">
+                <span>@username</span> added a comment - 3 days ago
+            </div>
+            <div class="comment-actions">
+                <i class="fa-solid fa-pen"></i>
+                <i class="fa-solid fa-trash"></i>
+            </div>
+        </div>
+    <div class="comment-body">
+        <span class="text-muted">
+            @comment.CommentText
+        </span>
+        @if(comment.attachments.Count > 0)
+            {
+                foreach(var file in comment.attachments)
+                {
+                    <div class="file-box">
+                        <div class="file-name">
+                            <i class="fa fa-file"></i>
+                            <span class="text-nowrap" title="@file.FileName"> @(file.FileName.Length >20? file.FileName.Substring(0,20) + "...": file.FileName)</span>
+                        </div>
+                        <div class="file-actions">
+                            <i title="Download file" class="fa fa-download"></i>
+                            <i title="Delete file" class="fa fa-trash"></i>
+                        </div>
+            </div>
+                }
+            }
+        </div>
+
+    </div>
+}
+
+
+@code {
+    [Parameter]
+    public Comment comment { get; set; }
+    private string username = "";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            username = await UserService.GetUserNameById(comment.UserId);       
+            StateHasChanged();
+        }
+    }
+
+}
