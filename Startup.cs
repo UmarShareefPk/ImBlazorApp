@@ -14,6 +14,8 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 
+
+
 namespace ImBlazorApp
 {
     public class Startup
@@ -35,10 +37,12 @@ namespace ImBlazorApp
             services.AddHttpClient();
             services.AddBlazoredLocalStorage();
            
+
             services.AddScoped<ICommon, Common>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IDashboardService, DashboardService>();
             services.AddScoped<IIncidentService, IncidentService>();
+     
 
             services.AddDistributedMemoryCache();
             services.AddSession(options =>

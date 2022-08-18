@@ -1,4 +1,6 @@
-﻿<table class="table field-table table-borderless">
+﻿
+
+<table class="table field-table table-borderless">
     <tr>
         <td>
             <span class="field-title">Assignee</span>           
@@ -24,7 +26,9 @@
         <td><span class="field-title">Start Time</span>
              <i class="edit-btn fa fa-pen"></i></td>
         <td>
-            22 minutes ago
+            @*22 minutes ago*@          
+           <RadzenDatePicker ShowTime="true" @bind-Value="startDate" Change=@startDateChange   />
+       
         </td>
     </tr>
     <tr>
@@ -41,5 +45,11 @@
 
 
 @code {
+    private DateTime startDate = DateTime.Now;
+    DateTime defaultValue = DateTime.Now;
 
+    void startDateChange(DateTime? value)
+    {
+        
+    }
 }
