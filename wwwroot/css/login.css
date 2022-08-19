@@ -28,3 +28,19 @@
     justify-content: center;
     align-items: center;
 }
+
+.login-btn{
+    display:flex;
+    align-items:center;
+}
+.login-btn span{
+   margin-right:5px;
+}
+
+.login-container .form-group label{
+    display:flex;
+    align-items:center;
+}
+.login-container .form-group label i {
+    margin-right:3px;
+}

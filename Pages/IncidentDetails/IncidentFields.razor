@@ -23,21 +23,37 @@
         </td>
     </tr>
     <tr>
-        <td><span class="field-title">Start Time</span>
-             <i class="edit-btn fa fa-pen"></i></td>
+        <td class="field-td">
+            <span class="field-title">Start Time</span>            
+             <i class="material-icons edit-btn" @onclick="startDateEditToggle" >edit</i>
+         </td>
         <td>
-            @*22 minutes ago*@          
-           <RadzenDatePicker ShowTime="true" @bind-Value="startDate" Change=@startDateChange   />
-       
+            @if(!startDateEditable)
+            {
+                <span>22 minutes ago</span>
+            }
+            else
+            {
+                <RadzenDatePicker ShowTime="true" @bind-Value="startDate" Change=@startDateChange />
+                <button class="btn bg-success text-white">Update</button>
+            }   
         </td>
     </tr>
     <tr>
-        <td>
+        <td class="field-td">
             <span class="field-title">Due Date</span>
-            <i class="edit-btn fa fa-pen"></i>
+            <i class="material-icons edit-btn" @onclick="dueDateEditToggle">edit</i>
         </td>
         <td>
-            In 27 days
+             @if(!dueDateEditable)
+            {
+                <span>In 2 minutes</span>
+            }
+            else
+            {
+                <RadzenDatePicker ShowTime="true" @bind-Value="dueDate" Change=@dueDateChange />
+                <button class="btn bg-success text-white">Update</button>
+            }   
         </td>
     </tr>
 </table>
@@ -45,11 +61,29 @@
 
 
 @code {
-    private DateTime startDate = DateTime.Now;
-    DateTime defaultValue = DateTime.Now;
+    private bool startDateEditable = false;
+    private void startDateEditToggle()
+    {
+        startDateEditable = !startDateEditable;
+    }
+
+    private DateTime startDate = DateTime.Now;    
 
     void startDateChange(DateTime? value)
-    {
-        
+    {        
     }
+
+    private bool dueDateEditable = false;
+    private void dueDateEditToggle()
+    {
+        dueDateEditable = !dueDateEditable;
+    }
+
+    private DateTime dueDate = DateTime.Now;    
+
+    void dueDateChange(DateTime? value)
+    {        
+    }
+
+
 }

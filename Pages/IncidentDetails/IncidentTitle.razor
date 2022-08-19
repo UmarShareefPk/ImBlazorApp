@@ -1,8 +1,9 @@
 ﻿<div class="title-container">
     <div class="incident-title">
         <div class="title-text-div">
-            <i class="fa fa-pen" @onclick="toggleEdit"></i>
-            <p> @title </p>
+            @*<i class="fa fa-pen" ></i>*@
+               <i class="material-icons" @onclick="toggleEdit">edit</i>
+            <span> @title </span>
         </div>
         @if (editOn)
         {

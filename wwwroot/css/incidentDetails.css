@@ -15,10 +15,10 @@
     font-size: xx-large;
 }
 
-.edit-btn.fa-pen {
+.edit-btn {
     color: gray;
     font-size: medium;
-    margin-left:1vw;
+    margin-left:5px;
     cursor:pointer;
 }
 
@@ -30,10 +30,12 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    margin-bottom:20px;
 }
 
 .title-text-div{
     display:flex;
+    align-items:center;
 }
 
 .incident-title {
@@ -44,13 +46,13 @@
     color: darkblue;
 }
 
-.incident-title i {
-    padding-top: 5px;
-    margin-right: 5px;
-    color: gray;
-    font-size: medium;
-    cursor: pointer;
-}
+    .incident-title i {
+        /*   padding-top: 5px;
+    margin-right: 5px;*/
+        color: gray;
+        font-size: x-large;
+        cursor: pointer;
+    }
 
 .incident-createTime {
     font-size: small;
@@ -62,7 +64,13 @@
 .field-title{
     font-weight:bold;
     color:darkblue;
+    display:flex;
+    align-items:center;
       
+}
+.field-td{
+    display:flex;
+    align-items:center;
 }
 .description-container {
     display: flex;
@@ -109,33 +117,33 @@
         /*margin-right:auto;*/
         font-size: medium;
         line-height: 2;
+        padding: 0px 8vw;
         border-bottom: dotted 0.5px lightgray;
     }
 
-        .files-container .file-box .file-name {
-            color: gray;
-        }
-
-            .files-container .file-box .file-name i {
-                color: #cfbf13;
-            }
-
-        .files-container .file-box .file-actions {
-            font-size: medium;
-        }
-.fa-download {
-    cursor:pointer;
-    color: blue;
+.files-container .file-box .file-name {
+    color: gray;
 }
- .fa-trash {
-    margin-left: 0.5vw;
-    cursor: pointer;
+
+.files-container .file-box .file-name i {
+    color: #cfbf13;
+}
+
+.files-container .file-box .file-actions {
+    font-size: medium;
+}
+.file-actions i{
+    cursor:pointer;
+}
+.file-actions i.del {
     color: red;
 }
-
+.file-actions i.download {
+    color: dodgerblue;
+}
 /******* Fields **********/
-.field-table{
-    line-height:2;
+.field-table {
+    line-height: 2;
 }
 field-table tr
 {
@@ -163,10 +171,14 @@ field-table tr
 }
 
 .comment-actions i{
-    margin-left:5px;
+    margin-left:3px;
+    cursor:pointer;
 }
-.comment-actions i.fa-pen {
+.comment-actions i.edit {
     color:gray;
+}
+.comment-actions i.del {
+    color: orangered;
 }
 
 .comment-body{
@@ -180,20 +192,24 @@ field-table tr
 
 .comment-box .file-box {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 0px 10vw;
     /*margin-right:auto;*/
     font-size: medium;
     line-height: 2;
     border-bottom: dotted 0.5px lightgray;
 }
 
+
 .comment-box .file-box .file-name {
     color: gray;
 }
 
-    .comment-box .file-box .file-name i {
-        color: #cfbf13;
-    }
+.comment-box .file-box .file-name i {
+    color: #cfbf13;
+}
+
+
 
 .comment-box .file-box .file-actions {
     margin-left:10px;

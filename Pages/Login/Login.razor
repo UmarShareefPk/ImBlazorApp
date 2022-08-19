@@ -23,11 +23,11 @@
                  <br />
 
                 <div class="form-group" style="">
-                    <label for="username"> <i class="fa fa-user"></i>  Username</label>
+                    <label for="username">  <i class="material-icons">person</i> <span>Username</span> </label>
                        <input type="text" class="form-control" @bind-value="username" id="username" placeholder="Enter Username" />
                 </div>
                 <div class="form-group" style="">
-                    <label for="password">  <i class="fa fa-key"></i>   Password</label>
+                    <label for="password">  <i class="material-icons">password</i> <span>Password</span>  </label>
                     <input type="password" class="form-control" @bind="password" id="password" placeholder="Enter Password" />
                 </div>
 
@@ -36,7 +36,9 @@
                 </div>
 
                 <div class="form-group" style="">
-                    <button @onclick="Login_click" class="btn btn-success btn-lg im-btn">Login </button>
+                    <button @onclick="Login_click" class="login-btn btn btn-success btn-lg im-btn">
+                          <span>Login</span> <i class="material-icons">login</i>  
+                        </button>
                 </div>
             </div>
         </div>

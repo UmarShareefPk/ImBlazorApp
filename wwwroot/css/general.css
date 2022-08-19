@@ -34,6 +34,9 @@
     border: none;
 }
 
+/******* Calender************/
+
+.rz-datepicker-calendar 
 /* Small devices  */
 @media (min-width: 300px) {
     .table{

@@ -11,26 +11,21 @@
 }
 
 .navbar .nav-link {
-    color: white;
+    color: white; 
+    display:flex;
+    justify-content:start;
+    align-items:center;
+    cursor:pointer;
 }
 
 .nav-item i {
     color: white;
+    padding-right: 2px;
 }
 
-.nav-item.icon {
-    display: flex;
-    width: 2.5vw;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    /* margin-top:0.5vh;*/
-}
 
 .badge.badge-pill {
-    background: rgb(6,85,9);
-    background: linear-gradient(90deg, rgba(6,85,9,1) 50%, rgba(26,199,42,1) 80%);
+    background-color:dodgerblue;
     color: white;
 }
 
