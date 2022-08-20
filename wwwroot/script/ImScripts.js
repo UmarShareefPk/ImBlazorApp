@@ -1,4 +1,9 @@
-﻿window.getMoment = (date) => {
+﻿$(document).ready(function () {
+    $('.dropdown-toggle').dropdown();
+});
+
+
+window.getMoment = (date) => {
     console.log("hi from script file");
     return moment(date).fromNow();
 };

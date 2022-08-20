@@ -1,12 +1,11 @@
-﻿
-
-<table class="table field-table table-borderless">
+﻿<table class="table field-table table-borderless">
     <tr>
         <td>
             <span class="field-title">Assignee</span>           
         </td>
         <td>
-              <input type="text" class="line-textbox" value="Umar Shareef"/>
+            @*  <input type="text" class="line-textbox" value="Umar Shareef"/>*@
+            <AssigneeDropdown></AssigneeDropdown>
         </td>
     </tr>
     <tr>
@@ -14,7 +13,7 @@
             <span class="field-title">Status</span>           
         </td>
         <td>
-            <select class="line-textbox">
+            <select class="line-textbox" value="@status" @onchange="statusHasChanged" >
                 <option value="N">New</option>
                 <option value="I">In Progress</option>
                 <option value="C">Closed</option>
@@ -30,11 +29,11 @@
         <td>
             @if(!startDateEditable)
             {
-                <span>22 minutes ago</span>
+                <span title="@startTime">@startTimeToDisplay</span>
             }
             else
             {
-                <RadzenDatePicker ShowTime="true" @bind-Value="startDate" Change=@startDateChange />
+                <RadzenDatePicker ShowTime="true" @bind-Value="newStartDate" Change=@startDateChange />
                 <button class="btn bg-success text-white">Update</button>
             }   
         </td>
@@ -47,11 +46,11 @@
         <td>
              @if(!dueDateEditable)
             {
-                <span>In 2 minutes</span>
+                <span title="@dueDate">@dueDateToDisplay</span>
             }
             else
             {
-                <RadzenDatePicker ShowTime="true" @bind-Value="dueDate" Change=@dueDateChange />
+                <RadzenDatePicker ShowTime="true" @bind-Value="newDueDate" Change=@dueDateChange />
                 <button class="btn bg-success text-white">Update</button>
             }   
         </td>
@@ -61,13 +60,40 @@
 
 
 @code {
+
+    /**/
+    [Parameter]
+    public string status { get; set; }
+    [Parameter]
+    public string assignee { get; set; }
+    [Parameter]
+    public DateTime startTime { get; set; } = DateTime.Now;
+    [Parameter]
+    public DateTime dueDate { get; set; } = DateTime.Now;
+
+    private string startTimeToDisplay = "";
+    private string dueDateToDisplay = "";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        startTimeToDisplay =  new(await JS.InvokeAsync<string>("getMoment", startTime));
+        dueDateToDisplay =  new(await JS.InvokeAsync<string>("getMoment", dueDate));
+
+        StateHasChanged();
+    }
+
+    private void statusHasChanged(ChangeEventArgs arg)
+    {
+        
+    }
+
     private bool startDateEditable = false;
     private void startDateEditToggle()
     {
         startDateEditable = !startDateEditable;
     }
 
-    private DateTime startDate = DateTime.Now;    
+    private DateTime newStartDate = DateTime.Now;    
 
     void startDateChange(DateTime? value)
     {        
@@ -79,7 +105,7 @@
         dueDateEditable = !dueDateEditable;
     }
 
-    private DateTime dueDate = DateTime.Now;    
+    private DateTime newDueDate = DateTime.Now;    
 
     void dueDateChange(DateTime? value)
     {        

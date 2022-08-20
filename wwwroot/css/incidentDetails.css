@@ -107,21 +107,21 @@
 /********* Files *****/
 
 .files-container{
-    margin-top:0vh;
+ 
     display:flex;
     flex-direction:column;
 }
-    .files-container .file-box {
-        display: flex;
-        justify-content: space-between;
-        /*margin-right:auto;*/
-        font-size: medium;
-        line-height: 2;
-        padding: 0px 8vw;
-        border-bottom: dotted 0.5px lightgray;
-    }
+.files-container .file-box {
+    display: flex;
+    justify-content: center;
+    font-size: medium;
+    line-height: 2;
+       
+    border-bottom: dotted 0.5px lightgray;
+}
 
 .files-container .file-box .file-name {
+    min-width: 10vw;
     color: gray;
 }
 
@@ -192,10 +192,10 @@ field-table tr
 
 .comment-box .file-box {
     display: flex;
-    justify-content: space-between;
-    padding: 0px 10vw;
+    justify-content: center;
+   /* padding: 0px 10vw;*/
     /*margin-right:auto;*/
-    font-size: medium;
+    font-size: small;
     line-height: 2;
     border-bottom: dotted 0.5px lightgray;
 }
@@ -203,6 +203,7 @@ field-table tr
 
 .comment-box .file-box .file-name {
     color: gray;
+    min-width:12vw;
 }
 
 .comment-box .file-box .file-name i {
@@ -214,4 +215,28 @@ field-table tr
 .comment-box .file-box .file-actions {
     margin-left:10px;
     font-size: medium;
+}
+
+/* assignee drop down*/
+
+.assignee-dropdown {
+    max-height: 50vh;
+    overflow-y: auto;
+    border: solid 1px silver;
+    background-color: white;
+}
+.dd-search-input{
+    font-size:large;
+    padding-left:1vw;
+    color:gray;
+}
+
+.dropdown-item{
+    cursor:pointer;
+    border-bottom:0.5px solid lightgray;
+    color:lightslategray;
+}
+.dropdown-item:hover {
+    background-color:darkblue;
+    color:white;
 }

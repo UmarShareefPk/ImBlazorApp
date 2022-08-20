@@ -1,0 +1,43 @@
+﻿<div class="dropdown">
+ <input readonly type="text" class="line-textbox dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>
+  
+  <div class="dropdown-menu " aria-labelledby="dropdownMenuButton">
+    <input type="text" class="line-textbox dd-search-input" placeholder="Search" />
+        @if (allUsers is null)
+        {
+            <p class="loading-p dropdown-item"> Loading...</p>
+        }
+        else
+        {
+            <div class="assignee-dropdown">
+                @foreach(User u in allUsers)
+                {
+                    string id = u.Id;
+                    <span class="assignee-item dropdown-item" @onclick="(userid)=>assigneeClicked(id)"> 
+                        @u.FirstName @u.LastName 
+                    </span>
+                }
+            </div>
+        }
+
+  </div>
+</div>
+
+@code {
+    private List<User> allUsers;
+
+    private void assigneeClicked(string id)
+    {
+        
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            allUsers = await localStorage.GetItemAsync<List<User>>("allUsers");
+            StateHasChanged();
+        }
+    }
+
+}
