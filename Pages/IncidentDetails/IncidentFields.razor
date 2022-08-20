@@ -3,8 +3,7 @@
         <td>
             <span class="field-title">Assignee</span>           
         </td>
-        <td>
-            @*  <input type="text" class="line-textbox" value="Umar Shareef"/>*@
+        <td>          
             <AssigneeDropdown></AssigneeDropdown>
         </td>
     </tr>
@@ -26,16 +25,13 @@
             <span class="field-title">Start Time</span>            
              <i class="material-icons edit-btn" @onclick="startDateEditToggle" >edit</i>
          </td>
-        <td>
-            @if(!startDateEditable)
-            {
-                <span title="@startTime">@startTimeToDisplay</span>
-            }
-            else
-            {
+        <td>            
+            <span title="@startTime" class='@(!startDateEditable? "" : "d-none" )' >@startTimeToDisplay</span>
+           
+            <div class='@(!startDateEditable? "d-none" : "" )'>
                 <RadzenDatePicker ShowTime="true" @bind-Value="newStartDate" Change=@startDateChange />
                 <button class="btn bg-success text-white">Update</button>
-            }   
+            </div>               
         </td>
     </tr>
     <tr>
@@ -43,18 +39,13 @@
             <span class="field-title">Due Date</span>
             <i class="material-icons edit-btn" @onclick="dueDateEditToggle">edit</i>
         </td>
-        <td>
-            @* @if(!dueDateEditable)
-            {*@
-                <span title="@dueDate" class='@(!dueDateEditable? "" : "d-none" )'>@dueDateToDisplay</span>
-         @*   }
-            else
-            {*@
-                <div class='@(!dueDateEditable? "d-none" : "" )'>
-                    <RadzenDatePicker  ShowTime="true" @bind-Value="newDueDate" Change=@dueDateChange />
-                    <button class="btn bg-success text-white">Update</button>
-                </div>
-           @* } *@  
+        <td>           
+            <span title="@dueDate" class='@(!dueDateEditable? "" : "d-none" )'>@dueDateToDisplay</span>
+         
+            <div class='@(!dueDateEditable? "d-none" : "" )'>
+                <RadzenDatePicker  ShowTime="true" @bind-Value="newDueDate" Change=@dueDateChange />
+                <button class="btn bg-success text-white">Update</button>
+            </div>           
         </td>
     </tr>
 </table>
