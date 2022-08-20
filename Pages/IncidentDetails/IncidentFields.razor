@@ -44,15 +44,17 @@
             <i class="material-icons edit-btn" @onclick="dueDateEditToggle">edit</i>
         </td>
         <td>
-             @if(!dueDateEditable)
-            {
-                <span title="@dueDate">@dueDateToDisplay</span>
-            }
+            @* @if(!dueDateEditable)
+            {*@
+                <span title="@dueDate" class='@(!dueDateEditable? "" : "d-none" )'>@dueDateToDisplay</span>
+         @*   }
             else
-            {
-                <RadzenDatePicker ShowTime="true" @bind-Value="newDueDate" Change=@dueDateChange />
-                <button class="btn bg-success text-white">Update</button>
-            }   
+            {*@
+                <div class='@(!dueDateEditable? "d-none" : "" )'>
+                    <RadzenDatePicker  ShowTime="true" @bind-Value="newDueDate" Change=@dueDateChange />
+                    <button class="btn bg-success text-white">Update</button>
+                </div>
+           @* } *@  
         </td>
     </tr>
 </table>
