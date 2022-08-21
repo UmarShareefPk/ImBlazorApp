@@ -4,7 +4,7 @@
             <span class="field-title">Assignee</span>           
         </td>
         <td>          
-            <AssigneeDropdown></AssigneeDropdown>
+            <AssigneeDropdown selectedAssignee="@assignee" assigneeChanged="assigneeHasChanged"></AssigneeDropdown>
         </td>
     </tr>
     <tr>
@@ -76,6 +76,12 @@
 
             StateHasChanged();
         }
+
+    }
+
+    private async Task assigneeHasChanged(string userId)
+    {
+       
     }
 
     private void statusHasChanged(ChangeEventArgs arg)

@@ -1,8 +1,10 @@
-﻿<div class="dropdown">
- <input readonly type="text" class="line-textbox dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>
+﻿@using IM.Models
+<div class="dropdown">
+ <input readonly type="text" value="@selectedAssigneeToDisplay"  class="assign-text line-textbox dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"/>
   
   <div class="dropdown-menu " aria-labelledby="dropdownMenuButton">
-    <input type="text" class="line-textbox dd-search-input" placeholder="Search" />
+    <input type="text"  @bind="serachText" class="line-textbox dd-search-input" placeholder="Enter first or last name" />
+    <input type="button" @onclick="searchTextChanged" class="btn btn-sm bg-primary text-white" value="Search" />
         @if (allUsers is null)
         {
             <p class="loading-p dropdown-item"> Loading...</p>
@@ -10,7 +12,7 @@
         else
         {
             <div class="assignee-dropdown">
-                @foreach(User u in allUsers)
+                @foreach(User u in filteredUsers)
                 {
                     string id = u.Id;
                     <span class="assignee-item dropdown-item" @onclick="(userid)=>assigneeClicked(id)"> 
@@ -24,11 +26,31 @@
 </div>
 
 @code {
+
+    [Parameter]
+    public EventCallback<string> assigneeChanged { get; set; }
+
+    [Parameter]
+    public string selectedAssignee { get; set; }
+
+    private string selectedAssigneeToDisplay = "";
+
     private List<User> allUsers;
+    private List<User> filteredUsers;
+    private string serachText = "";
+
+    private void searchTextChanged()
+    {
+      
+        string fullSearchText = serachText;
+        filteredUsers = allUsers.Where(u =>
+            u.FirstName.ToLower().StartsWith(fullSearchText.ToLower()) || u.LastName.ToLower().StartsWith(fullSearchText.ToLower())).ToList();
+               
+    }
 
     private void assigneeClicked(string id)
     {
-        
+
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -36,8 +58,15 @@
         if(firstRender)
         {
             allUsers = await localStorage.GetItemAsync<List<User>>("allUsers");
+            filteredUsers = allUsers;
+            
             StateHasChanged();
         }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        selectedAssigneeToDisplay = await UserService.GetUserNameById(selectedAssignee);
     }
 
 }
