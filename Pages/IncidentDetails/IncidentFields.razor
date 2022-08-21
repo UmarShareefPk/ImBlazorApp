@@ -69,10 +69,13 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        startTimeToDisplay =  new(await JS.InvokeAsync<string>("getMoment", startTime));
-        dueDateToDisplay =  new(await JS.InvokeAsync<string>("getMoment", dueDate));
+        if (firstRender)
+        {
+            startTimeToDisplay = new(await JS.InvokeAsync<string>("getMoment", startTime));
+            dueDateToDisplay = new(await JS.InvokeAsync<string>("getMoment", dueDate));
 
-        StateHasChanged();
+            StateHasChanged();
+        }
     }
 
     private void statusHasChanged(ChangeEventArgs arg)

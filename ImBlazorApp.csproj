@@ -9,8 +9,4 @@
     <PackageReference Include="Radzen.Blazor" Version="3.20.4" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="NewFolder\" />
-  </ItemGroup>
-
 </Project>
