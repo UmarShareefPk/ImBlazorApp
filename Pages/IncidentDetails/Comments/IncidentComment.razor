@@ -50,10 +50,13 @@
     {
         if (firstRender)
         {
-            username = await UserService.GetUserNameById(comment.UserId);
-            createDateToDisplay = new(await JS.InvokeAsync<string>("getMoment", comment.CreateDate));
-            StateHasChanged();
         }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+         username = await UserService.GetUserNameById(comment.UserId);
+         createDateToDisplay = new(await JS.InvokeAsync<string>("getMoment", comment.CreateDate));
     }
 
 }
