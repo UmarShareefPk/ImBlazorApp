@@ -7,15 +7,17 @@
 </div>
 
 @code {
-        protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if(firstRender)
         {
             string token = await localStorage.GetItemAsync<string>("token");
             var mostassignedtoUsersData = await DashboardService.GetMostAssignedToUsers(token);
-           
-            string response = new(await JS.InvokeAsync<string>("drawMostAssignedToUserChart", mostassignedtoUsersData));
-          
+
+            if(mostassignedtoUsersData is not null)
+            {
+                string response = new(await JS.InvokeAsync<string>("drawMostAssignedToUserChart", mostassignedtoUsersData));
+            }
             StateHasChanged();
         }
     }

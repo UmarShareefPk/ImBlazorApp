@@ -7,7 +7,7 @@
     <Kpi ColorClass="assignedToMe-color" KpiText="Assigned To Me" KpiValue=@assignedToMeValue ></Kpi>
 </div>
 @code {
-   
+
     private string newValue = "0";
     private string inProgressValue = "0";
     private string closedValue = "0";
@@ -21,12 +21,15 @@
         {
             string token = await localStorage.GetItemAsync<string>("token");
             var kpiData = await DashboardService.GetKpi(token);
-            newValue = kpiData.New.ToString();
-            inProgressValue = kpiData.InProgress.ToString();
-            closedValue = kpiData.Closed.ToString();
-            approvedValue = kpiData.Approved.ToString();
-            lateValue = kpiData.Late.ToString();
-            assignedToMeValue = kpiData.AssignedToMe.ToString();
+            if (kpiData is not null)
+            {
+                newValue = kpiData.New.ToString();
+                inProgressValue = kpiData.InProgress.ToString();
+                closedValue = kpiData.Closed.ToString();
+                approvedValue = kpiData.Approved.ToString();
+                lateValue = kpiData.Late.ToString();
+                assignedToMeValue = kpiData.AssignedToMe.ToString();
+            }
             StateHasChanged();
         }
     }

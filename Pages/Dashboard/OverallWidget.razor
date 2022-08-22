@@ -20,14 +20,16 @@
         {
             string token = await localStorage.GetItemAsync<string>("token");
             var kpiData = await DashboardService.GetOverallWidget(token);
-            newValue = kpiData.New.ToString();
-            inProgressValue = kpiData.InProgress.ToString();
-            closedValue = kpiData.Closed.ToString();
-            approvedValue = kpiData.Approved.ToString();
-            lateValue = kpiData.Late.ToString();
-
-            string response = new(await JS.InvokeAsync<string>("drawOverallChart", kpiData));
-          
+            if (kpiData is not null)
+            {
+                newValue = kpiData.New.ToString();
+                inProgressValue = kpiData.InProgress.ToString();
+                closedValue = kpiData.Closed.ToString();
+                approvedValue = kpiData.Approved.ToString();
+                lateValue = kpiData.Late.ToString();
+            
+                string response = new(await JS.InvokeAsync<string>("drawOverallChart", kpiData));
+            }
             StateHasChanged();
         }
     }

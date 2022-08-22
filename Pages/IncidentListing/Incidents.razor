@@ -54,7 +54,7 @@
 </div>
 
 @code {
-    
+
     List<Incident> incidents;
     int totalRecords;
     int pageNumber = 1;
@@ -91,8 +91,12 @@
     {
         string token = await localStorage.GetItemAsync<string>("token");     
         var incidentPages = await IncidentService.GetIncidentsWithPage(token, pageSize, pageNumber, search);
-        incidents = incidentPages.Incidents;
-        totalRecords = incidentPages.Total_Incidents;
+        if(incidentPages is not null)
+        {
+             incidents = incidentPages.Incidents;
+             totalRecords = incidentPages.Total_Incidents;
+        }
+       
         StateHasChanged();
     }
 

@@ -51,7 +51,7 @@
 </div>
 
 @code {
-        
+
     List<User> users;
     int totalRecords;
     int pageNumber = 1;
@@ -64,7 +64,7 @@
         pageSize = pageInfo.pSize;
         pageNumber = pageInfo.pNumber;
         await GetUsers(pageSize, pageNumber, searchTxt);
-       
+
     }
 
     private async Task SearchTextChanged()
@@ -77,7 +77,7 @@
         if (firstRender)
         {
             await GetUsers(5, 1, "");
-          
+
         }
     }
 
@@ -86,9 +86,12 @@
         string token = await localStorage.GetItemAsync<string>("token");
         var userPages = await UserService.GetUsersWithPage(token, pageSize, pageNumber, search);
 
-        users = userPages.Users;
-        totalRecords = userPages.Total_Users;
-          StateHasChanged();
+        if(userPages is not null)
+        {
+             users = userPages.Users;
+             totalRecords = userPages.Total_Users;
+        }
+        StateHasChanged();
     }
 
      
