@@ -1,6 +1,7 @@
 ﻿using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace ImBlazorApp.Helper
 {
