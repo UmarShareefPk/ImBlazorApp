@@ -22,7 +22,7 @@
     </tr>
     <tr>
         <td class="field-td">
-            <span class="field-title">Start Time</span>            
+            <span class="field-title text-nowrap">Start Time</span>            
              <i class="material-icons edit-btn" @onclick="startDateEditToggle" >edit</i>
          </td>
         <td>            
@@ -30,13 +30,13 @@
            
             <div class='@(!startDateEditable? "d-none" : "" )'>
                 <RadzenDatePicker ShowTime="true" @bind-Value="newStartDate" Change=@startDateChange />
-                <button class="btn bg-success text-white">Update</button>
+                <button class="btn bg-success text-white" @onclick="updateStartTime">Update</button>
             </div>               
         </td>
     </tr>
     <tr>
         <td class="field-td">
-            <span class="field-title">Due Date</span>
+            <span class="field-title text-nowrap">Due Date</span>
             <i class="material-icons edit-btn" @onclick="dueDateEditToggle">edit</i>
         </td>
         <td>           
@@ -44,7 +44,7 @@
          
             <div class='@(!dueDateEditable? "d-none" : "" )'>
                 <RadzenDatePicker  ShowTime="true" @bind-Value="newDueDate" Change=@dueDateChange />
-                <button class="btn bg-success text-white">Update</button>
+                <button class="btn bg-success text-white" @onclick="updateDueDate">Update</button>
             </div>           
         </td>
     </tr>
@@ -54,7 +54,8 @@
 
 @code {
 
-    /**/
+    [Parameter]
+    public string incidentId { get; set; }
     [Parameter]
     public string status { get; set; }
     [Parameter]
@@ -73,7 +74,6 @@
         {
             startTimeToDisplay = new(await JS.InvokeAsync<string>("getMoment", startTime));
             dueDateToDisplay = new(await JS.InvokeAsync<string>("getMoment", dueDate));
-
             StateHasChanged();
         }
 
@@ -81,12 +81,18 @@
 
     private async Task assigneeHasChanged(string userId)
     {
-       
+
+        bool success =  await updateIncident("AssignedTo", userId);
+        if(success)
+        {
+            assignee = userId;
+        }
     }
 
-    private void statusHasChanged(ChangeEventArgs arg)
+    private async Task statusHasChanged(ChangeEventArgs arg)
     {
-        
+        string newStatus = arg.Value.ToString();
+        await updateIncident("Status", newStatus);
     }
 
     private bool startDateEditable = false;
@@ -101,6 +107,28 @@
     {        
     }
 
+    async Task updateStartTime()
+    {
+        bool success = await updateIncident("StartTime", newStartDate.ToString());
+        if (success)
+        {
+            startTime = newStartDate;
+            startTimeToDisplay = new(await JS.InvokeAsync<string>("getMoment", startTime));           
+            startDateEditToggle();
+        }
+    }
+
+    async Task updateDueDate()
+    {
+        bool success = await updateIncident("DueDate", newDueDate.ToString());
+        if (success)
+        {
+            dueDate = newDueDate;
+            dueDateToDisplay = new(await JS.InvokeAsync<string>("getMoment", dueDate));
+            dueDateEditToggle();
+        }
+    }
+
     private bool dueDateEditable = false;
     private void dueDateEditToggle()
     {
@@ -111,6 +139,23 @@
 
     void dueDateChange(DateTime? value)
     {        
+    }
+
+    async Task<bool> updateIncident(string field, string value)
+    {
+        string token = await localStorage.GetItemAsync<string>("token");
+        string loggedInUser = await UserService.GetLoggedInUserId();
+
+        bool isSuccess = await IncidentService.UpdateIncident(token, new
+        {
+            IncidentId = incidentId,
+            Parameter = field,
+            Value = value,
+            UserId = loggedInUser
+        });
+
+        return isSuccess;
+
     }
 
 
