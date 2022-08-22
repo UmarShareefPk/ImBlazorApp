@@ -9,15 +9,18 @@
     [Parameter]
     public User user { get; set; }
     string createdAt = "";
-    
+
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-            createdAt = new(await JS.InvokeAsync<string>("getMoment", user.CreateDate));
-            StateHasChanged();
         }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+         createdAt = new(await JS.InvokeAsync<string>("getMoment", user.CreateDate));
     }
 
 }

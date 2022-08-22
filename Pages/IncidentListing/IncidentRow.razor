@@ -26,14 +26,17 @@
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
-        {
+        {                        
+        }
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
             assignedTo = await userService.GetUserNameById(incident.AssignedTo);
             createdBy = await userService.GetUserNameById(incident.CreatedBy);
             createdAt = new(await JS.InvokeAsync<string>("getMoment", incident.CreatedAT));
             dueDate = new(await JS.InvokeAsync<string>("getMoment", incident.DueDate));
             status = Common.GetStatusNameByCode(incident.Status);
-            StateHasChanged();
-        }
     }
 
 }
