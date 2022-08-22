@@ -8,6 +8,8 @@ using Blazored.LocalStorage;
 using System.Linq;
 using System.Text;
 using ImBlazorApp.Models;
+using ImBlazorApp.Helper;
+using System.Net;
 
 namespace ImBlazorApp.Data
 {
@@ -26,17 +28,20 @@ namespace ImBlazorApp.Data
         private readonly IConfiguration configuration;
         private readonly IHttpClientFactory clientFactory;
         private readonly ILocalStorageService localStorage;
-        public UserService(IConfiguration _configuration, IHttpClientFactory _clientFactory, ILocalStorageService _localStorage)
+        private readonly ICommon commonService;
+        private string baseUrl = "https://imwebapicore.azurewebsites.net/api";
+        public UserService(IConfiguration _configuration, IHttpClientFactory _clientFactory, ILocalStorageService _localStorage, ICommon _commonService)
         {
             configuration = _configuration;
             clientFactory = _clientFactory;
             localStorage = _localStorage;
+            commonService = _commonService;
         }
 
         public async Task<bool> Authenticate(string username, string password)
         {
             var request = new HttpRequestMessage(HttpMethod.Post,
-          configuration.GetSection("APIURL").Value + "/Users/authenticate");
+                 baseUrl + "/Users/authenticate");
             request.Content = new StringContent(JsonSerializer.Serialize(new { Username = username, Password = password }), Encoding.UTF8, "application/json");
 
             var client = clientFactory.CreateClient();
@@ -64,7 +69,7 @@ namespace ImBlazorApp.Data
         public async Task<List<User>> GetAllUsers(string token)
         {
             var request = new HttpRequestMessage(HttpMethod.Get,
-                configuration.GetSection("APIURL").Value + "/Users/AllUsers");
+                baseUrl + "/Users/AllUsers");
 
             request.Headers.Add("Authorization", "Bearer " + token);
 
@@ -81,6 +86,11 @@ namespace ImBlazorApp.Data
             }
             else
             {
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    commonService.HandleUnauthorizedRequests("GetAllUsers");
+                }
+                commonService.HandleFailedRequests("GetAllUsers", response.StatusCode);
             }
 
             return users;
@@ -89,7 +99,7 @@ namespace ImBlazorApp.Data
         public async Task<UserPages> GetUsersWithPage(string token, int pageSize, int pageNumber, string search)
         {           
             var request = new HttpRequestMessage(HttpMethod.Get,
-             configuration.GetSection("APIURL").Value + "/Users/GetUsersWithPage?PageSize=" + pageSize + "&PageNumber=" + pageNumber + "&SortBy=a&SortDirection=a&Search=" + search);
+             baseUrl + "/Users/GetUsersWithPage?PageSize=" + pageSize + "&PageNumber=" + pageNumber + "&SortBy=a&SortDirection=a&Search=" + search);
 
             request.Headers.Add("Authorization", "Bearer " + token);
 
@@ -106,6 +116,11 @@ namespace ImBlazorApp.Data
             }
             else
             {
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    commonService.HandleUnauthorizedRequests("GetUsersWithPage");
+                }
+                commonService.HandleFailedRequests("GetUsersWithPage", response.StatusCode);
                 return null;
             }     
         }

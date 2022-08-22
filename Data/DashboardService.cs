@@ -8,6 +8,8 @@ using Blazored.LocalStorage;
 using System.Linq;
 using System.Text;
 using ImBlazorApp.Models;
+using ImBlazorApp.Helper;
+using System.Net;
 
 namespace ImBlazorApp.Data
 {
@@ -26,19 +28,22 @@ namespace ImBlazorApp.Data
         private readonly IHttpClientFactory clientFactory;
         private readonly ILocalStorageService localStorage;
         private readonly IUserService userService;
-        public DashboardService(IConfiguration _configuration, IHttpClientFactory _clientFactory, ILocalStorageService _localStorage, IUserService _userService)
+        private readonly ICommon commonService;
+        private string baseUrl = "https://imwebapicore.azurewebsites.net/api";
+        public DashboardService(IConfiguration _configuration, IHttpClientFactory _clientFactory, ILocalStorageService _localStorage, IUserService _userService, ICommon _commonService)
         {
             configuration = _configuration;
             clientFactory = _clientFactory;
             localStorage = _localStorage;
             userService = _userService;
+            commonService = _commonService;
         }
 
         public async Task<KpiData> GetKpi(string token)
         {
             string loggedInUser = await userService.GetLoggedInUserId();
             var request = new HttpRequestMessage(HttpMethod.Get,
-                configuration.GetSection("APIURL").Value + "/Incidents/KPI?userId=" + loggedInUser);
+                baseUrl + "/Incidents/KPI?userId=" + loggedInUser);
 
             request.Headers.Add("Authorization", "Bearer " + token);
 
@@ -53,6 +58,11 @@ namespace ImBlazorApp.Data
             }
             else
             {
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    commonService.HandleUnauthorizedRequests("GetKpi");
+                }
+                commonService.HandleFailedRequests("GetKpi", response.StatusCode);
                 return null;
             }
         }
@@ -60,7 +70,7 @@ namespace ImBlazorApp.Data
         public async Task<KpiData> GetOverallWidget(string token)
         {
             var request = new HttpRequestMessage(HttpMethod.Get,
-                configuration.GetSection("APIURL").Value + "/Incidents/OverallWidget");
+               baseUrl + "/Incidents/OverallWidget");
 
             request.Headers.Add("Authorization", "Bearer " + token);
 
@@ -75,6 +85,11 @@ namespace ImBlazorApp.Data
             }
             else
             {
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    commonService.HandleUnauthorizedRequests("GetOverallWidget");
+                }
+                commonService.HandleFailedRequests("GetOverallWidget", response.StatusCode);
                 return null;
             }
         }
@@ -82,7 +97,7 @@ namespace ImBlazorApp.Data
         public async Task<List<Incident>> GetLast5Incidents(string token)
         {
             var request = new HttpRequestMessage(HttpMethod.Get,
-                configuration.GetSection("APIURL").Value + "/Incidents/Last5Incidents");
+                baseUrl + "/Incidents/Last5Incidents");
 
             request.Headers.Add("Authorization", "Bearer " + token);
 
@@ -97,6 +112,11 @@ namespace ImBlazorApp.Data
             }
             else
             {
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    commonService.HandleUnauthorizedRequests("GetLast5Incidents");
+                }
+                commonService.HandleFailedRequests("GetLast5Incidents", response.StatusCode);
                 return null;
             }
         }
@@ -104,7 +124,7 @@ namespace ImBlazorApp.Data
         public async Task<List<Incident>> GetOldest5UnresolvedIncidents(string token)
         {
             var request = new HttpRequestMessage(HttpMethod.Get,
-                configuration.GetSection("APIURL").Value + "/Incidents/Oldest5UnresolvedIncidents");
+                baseUrl + "/Incidents/Oldest5UnresolvedIncidents");
 
             request.Headers.Add("Authorization", "Bearer " + token);
 
@@ -119,6 +139,11 @@ namespace ImBlazorApp.Data
             }
             else
             {
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    commonService.HandleUnauthorizedRequests("GetOldest5UnresolvedIncidents");
+                }
+                commonService.HandleFailedRequests("GetOldest5UnresolvedIncidents", response.StatusCode);
                 return null;
             }
         }
@@ -126,7 +151,7 @@ namespace ImBlazorApp.Data
         public async Task<object> GetMostAssignedToUsers(string token)
         {
             var request = new HttpRequestMessage(HttpMethod.Get,
-                configuration.GetSection("APIURL").Value + "/Incidents/MostAssignedToUsersIncidents");
+                baseUrl + "/Incidents/MostAssignedToUsersIncidents");
 
             request.Headers.Add("Authorization", "Bearer " + token);
 
@@ -141,6 +166,11 @@ namespace ImBlazorApp.Data
             }
             else
             {
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    commonService.HandleUnauthorizedRequests("GetMostAssignedToUsers");
+                }
+                commonService.HandleFailedRequests("GetMostAssignedToUsers", response.StatusCode);
                 return null;
             }
         }
