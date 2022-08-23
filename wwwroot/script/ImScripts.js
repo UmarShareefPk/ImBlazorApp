@@ -16,7 +16,7 @@ window.drawOverallChart = (data) => {
     Highcharts.chart('overallChart', {
         chart: {
             type: 'pie',
-            height: (70) + '%',
+           
         },
         title: {
             text: ''
@@ -161,8 +161,7 @@ window.drawMostAssignedToUserChart = (data) => {
             text: 'My chart'
         },
         chart: {
-            type: 'bar',
-            height: (70) + '%',
+            type: 'bar',            
             //width: (100) + '%',
         },
         title: {
