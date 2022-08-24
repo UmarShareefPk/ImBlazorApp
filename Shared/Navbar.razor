@@ -1,4 +1,7 @@
-﻿<nav class="navbar sticky-top navbar-expand-lg">
+﻿@using ImBlazorApp.Shared.Notifications
+@using Microsoft.AspNetCore.SignalR.Client
+
+<nav class="navbar sticky-top navbar-expand-lg">
     <div class="container">
         <a class="navbar-brand" href="/Dashboard">
             <img src="/img/logo-white.png" height="50px" />
@@ -23,11 +26,7 @@
                         Users</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" @onclick:preventDefault="true">
-                        <i class="material-icons">notifications</i>
-                        <span class="badge badge-pill">5 new</span>
-                    </a>
-
+                    <Notifications @ref="notificationsComponent"></Notifications>
                 </li>
                 <li class="nav-item" @onclick="Logout">
                     <a class="nav-link" href="#">
@@ -45,11 +44,38 @@
 @code {
      [Inject]
     public NavigationManager navigationManager { get; set; }
+    private HubConnection? hubConnection;
+    private Notifications.Notifications notificationsComponent;
 
     private async Task Logout()
     {
          await localStorage.RemoveItemAsync("token");
          navigationManager.NavigateTo("/"); 
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+            await signalrReceiver();
+        } 
+    }
+
+    private async Task signalrReceiver()
+    {
+        string token = await localStorage.GetItemAsync<string>("token");
+        hubConnection = new HubConnectionBuilder()
+            .WithUrl("https://imwebapicore.azurewebsites.net" + "/hubs/notifications")
+            .WithAutomaticReconnect()
+            .Build();
+
+        hubConnection.On<string>("UpdateNotifications", (incidentId) =>
+        {
+            InvokeAsync(notificationsComponent.loadNotifications);
+        });
+
+        await hubConnection.StartAsync();
+        await NotificationService.UpdateHubId(token, hubConnection.ConnectionId);
     }
 
 }

@@ -11,11 +11,11 @@
 }
 
 .navbar .nav-link {
-    color: white; 
-    display:flex;
-    justify-content:start;
-    align-items:center;
-    cursor:pointer;
+    color: white;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    cursor: pointer;
 }
 
 .nav-item i {
@@ -25,7 +25,7 @@
 
 
 .badge.badge-pill {
-    background-color:dodgerblue;
+    background-color: dodgerblue;
     color: white;
 }
 
@@ -58,3 +58,72 @@
 /* Computer */
 @media (min-width: 1500px) {
 }
+
+
+/***** Notifications *************/
+
+.notification-container {
+    max-height: 80vh;
+    overflow-y: auto;
+    min-width: 30vw;
+}
+
+.notification-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 10px;
+    border-bottom: solid 1px black;
+}
+
+    .notification-div.read {
+    }
+
+    .notification-div.unread {
+        background-color: rgba(12,0,106,1);
+    }
+
+    .notification-div .notification-text-div {
+        display: flex;
+        align-items: center;
+        max-width: 70%;
+        min-width: 70%;
+    }
+
+    .notification-div i {
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .notification-div.read i {
+        color: rgba(12,0,106,1);
+    }
+
+    .notification-div.unread i {
+    }
+
+    .notification-div span.notification-text {
+        cursor: pointer;
+    }
+
+        .notification-div span.notification-text:hover {
+            text-decoration: underline;
+        }
+
+    .notification-div.read span.notification-text {
+        color: #808080;
+    }
+
+    .notification-div.unread span.notification-text {
+        color: white;
+    }
+
+    .notification-div.read .timestamp {
+        color: #808080;
+        font-size: small;
+    }
+
+    .notification-div.unread .timestamp {
+        color: white;
+        font-size: small;
+    }

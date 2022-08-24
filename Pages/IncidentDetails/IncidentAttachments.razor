@@ -7,8 +7,9 @@
         {
             <div class="file-box">
                 <div class="file-name">
-                    <i class="fa fa-file"></i>
-                    <span class="text-nowrap" title="@file.FileName"> @(file.FileName.Length >20? file.FileName.Substring(0,20) + "...": file.FileName)</span>
+                   <span class="text-nowrap" title="@file.FileName">
+                         <i class="material-icons">attachment</i>
+                        @(file.FileName.Length >20? file.FileName.Substring(0,20) + "...": file.FileName)</span>
                 </div>
                 <div class="file-actions">
                    <i title="Download file" class="material-icons download">download</i>

@@ -11,7 +11,7 @@
             </div>
 
             <div class="title">
-                <a href="#" >
+                <a href="/IncidentDetails/@incident.Id" >
                     @incident.Title
                 </a>
             </div>
@@ -28,12 +28,15 @@
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
-        {
-            createdAt = new(await JS.InvokeAsync<string>("getMoment", incident.CreatedAT));
-            status = Common.GetStatusNameByCode(incident.Status);
-            StateHasChanged();
+        {         
+            
         }
+    }
 
+    protected override async Task OnParametersSetAsync()
+    {
+             createdAt = new(await JS.InvokeAsync<string>("getMoment", incident.CreatedAT));
+            status = Common.GetStatusNameByCode(incident.Status);
     }
 
 }

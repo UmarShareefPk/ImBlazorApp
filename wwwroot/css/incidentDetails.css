@@ -125,8 +125,14 @@
             color: gray;
         }
 
+            .files-container .file-box .file-name span {
+                display: flex;
+            }
+
             .files-container .file-box .file-name i {
                 color: #cfbf13;
+                margin-right: 2px;
+                margin-top: 4px;
             }
 
         .files-container .file-box .file-actions {
@@ -223,8 +229,14 @@ field-table tr {
         min-width: 12vw;
     }
 
+        .comment-box .file-box .file-name span {
+            display: flex;
+        }
+
+
         .comment-box .file-box .file-name i {
             color: #cfbf13;
+            margin-right: 2px;
         }
 
 
