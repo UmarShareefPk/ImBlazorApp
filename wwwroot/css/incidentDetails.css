@@ -5,15 +5,15 @@
     text-align: right;
 }
 
-    .edit-buttons .fa-check {
-        color: green;
-        font-size: xx-large;
-    }
+.edit-buttons .save-btn {
+    color: green;
+    font-size: xx-large;
+}
 
-    .edit-buttons .fa-close {
-        color: orange;
-        font-size: xx-large;
-    }
+.edit-buttons .cancel-btn {
+    color: orange;
+    font-size: xx-large;
+}
 
 .edit-btn {
     color: gray;
