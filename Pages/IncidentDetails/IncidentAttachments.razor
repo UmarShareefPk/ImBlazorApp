@@ -1,22 +1,39 @@
-﻿<div class="field-title">Attachments 
+﻿
+<div class="field-title">Attachments 
 </div>
 <div class="files-container">
+    
     @if(attachments is not null && attachments.Count > 0)
     {
-        foreach(IncidentAttachment file in attachments)
-        {
-            <div class="file-box">
-                <div class="file-name">
-                   <span class="text-nowrap" title="@file.FileName">
-                         <i class="material-icons">attachment</i>
-                        @(file.FileName.Length >20? file.FileName.Substring(0,20) + "...": file.FileName)</span>
+        <span class="incident-files-toggle" @onclick="@(() => showFiles = !showFiles)">
+            @if (showFiles)
+            {
+                <i class="material-icons">visibility_off</i>
+                <span>Hide @attachments.Count attachments</span>
+            }
+            else
+            {
+                <i class="material-icons">visibility</i>
+                <span>Show @attachments.Count attachments</span>
+            }
+        </span>
+        <div class="@(showFiles? "" : "d-none")">
+            @foreach(IncidentAttachment file in attachments)
+            {
+                <div class="file-box">
+                    <div class="file-name">
+                    
+                        <span class="text-nowrap" title="@file.FileName">
+                             <i class="material-icons">attachment</i>
+                            @(file.FileName.Length >20? file.FileName.Substring(0,20) + "...": file.FileName)</span>
+                    </div>
+                    <div class="file-actions">
+                       <i title="Download file" class="material-icons download">download</i>
+                       <i title="Delete file" class="material-icons del">delete_forever</i>
+                    </div>
                 </div>
-                <div class="file-actions">
-                   <i title="Download file" class="material-icons download">download</i>
-                   <i title="Delete file" class="material-icons del">delete_forever</i>
-                </div>
-            </div>
-        }
+            }
+        </div>
     }
     else
     {
@@ -28,4 +45,5 @@
     [Parameter]
     public List<IncidentAttachment> attachments { get; set; }
 
+    private bool showFiles = false;
 }

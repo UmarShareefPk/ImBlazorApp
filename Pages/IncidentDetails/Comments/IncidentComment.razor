@@ -20,18 +20,34 @@
         </span>
         @if(comment.attachments.Count > 0)
             {
-                foreach(var file in comment.attachments)
+                <span class="comment-files-toggle" @onclick="@(() => showFiles = !showFiles)">
+            @if (showFiles)
+            {
+                <i class="material-icons">visibility_off</i>
+                <span>Hide @comment.attachments.Count attachments</span>
+            }
+            else
+            {
+                <i class="material-icons">visibility</i>
+                <span>Show @comment.attachments.Count attachments</span>
+            }
+        </span>
+        <div class="@(showFiles? "" : "d-none")">
+                @foreach(var file in comment.attachments)
                 {
                     <div class="file-box">
                         <div class="file-name">
-                               <span class="text-nowrap" title="@file.FileName">  <i class="material-icons">attachment</i> @(file.FileName.Length >20? file.FileName.Substring(0,20) + "...": file.FileName)</span>
+                           
+                            <span class="text-nowrap" title="@file.FileName">  <i class="material-icons">attachment</i> @(file.FileName.Length >20? file.FileName.Substring(0,20) + "...": file.FileName)</span>
                         </div>
-                        <div class="file-actions">                         
+                        <div class="file-actions">
+                         
                             <i title="Download file" class="material-icons download">download</i>
                             <i title="Delete file" class="material-icons del">delete_forever</i>
                         </div>
             </div>
                 }
+                </div>
             }
         </div>
 
@@ -43,9 +59,10 @@
     [Parameter]
     public Comment comment { get; set; }
     private string username = "";
+     private bool showFiles = false;
     private string createDateToDisplay = "";
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+  protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
@@ -57,5 +74,6 @@
          username = await UserService.GetUserNameById(comment.UserId);
          createDateToDisplay = new(await JS.InvokeAsync<string>("getMoment", comment.CreateDate));
     }
+    
 
 }

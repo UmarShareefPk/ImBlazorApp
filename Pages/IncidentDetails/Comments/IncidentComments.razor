@@ -8,12 +8,13 @@
 }
 else
 {
-    foreach(Comment c in comments)
-    {
-        <IncidentComment comment="@c"></IncidentComment>
-    }
-
-     <NewComment></NewComment>
+    <div class="comments-container">
+        @foreach(Comment c in comments)
+        {
+            <IncidentComment comment="@c"></IncidentComment>
+        }
+    </div>
+    <NewComment></NewComment>
 }
 
 @code {

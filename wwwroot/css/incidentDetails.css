@@ -5,15 +5,15 @@
     text-align: right;
 }
 
-.edit-buttons .save-btn {
-    color: green;
-    font-size: xx-large;
-}
+    .edit-buttons .save-btn {
+        color: green;
+        font-size: xx-large;
+    }
 
-.edit-buttons .cancel-btn {
-    color: orange;
-    font-size: xx-large;
-}
+    .edit-buttons .cancel-btn {
+        color: orange;
+        font-size: xx-large;
+    }
 
 .edit-btn {
     color: gray;
@@ -112,32 +112,46 @@
     flex-direction: column;
 }
 
-    .files-container .file-box {
-        display: flex;
-        justify-content: center;
-        font-size: medium;
-        line-height: 2;
-        border-bottom: dotted 0.5px lightgray;
+.incident-files-toggle {
+    padding-left: 15px;
+    padding-top: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: medium;
+    color: darkblue;
+}
+
+    .incident-files-toggle i {
+        margin-right: 5px;
     }
 
-        .files-container .file-box .file-name {
-            min-width: 10vw;
-            color: gray;
+.files-container .file-box {
+    display: flex;
+    justify-content: center;
+    font-size: medium;
+    line-height: 2;
+    border-bottom: dotted 0.5px lightgray;
+}
+
+    .files-container .file-box .file-name {
+        min-width: 190px;
+        color: gray;
+    }
+
+        .files-container .file-box .file-name span {
+            display: flex;
         }
 
-            .files-container .file-box .file-name span {
-                display: flex;
-            }
-
-            .files-container .file-box .file-name i {
-                color: #cfbf13;
-                margin-right: 2px;
-                margin-top: 4px;
-            }
-
-        .files-container .file-box .file-actions {
-            font-size: medium;
+        .files-container .file-box .file-name i {
+            color: #cfbf13;
+            margin-right: 2px;
+            margin-top: 4px;
         }
+
+    .files-container .file-box .file-actions {
+        font-size: medium;
+    }
 
 .file-actions i {
     cursor: pointer;
@@ -160,10 +174,17 @@ field-table tr {
 }
 
 /********* Comments ************/
+.comments-container {
+    max-height: 40vh;
+    overflow-y: auto;
+    margin-top: 15px;
+}
+
 .comment-box {
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
+    border-bottom: 1px dotted black;
 }
 
 .comment-header {
@@ -209,8 +230,8 @@ field-table tr {
 }
 
     .comment-body span {
-        width: 100%;
-        text-align: center;
+        /*width: 100%;
+    text-align: center;*/
     }
 
 .comment-box .file-box {
@@ -223,30 +244,46 @@ field-table tr {
     border-bottom: dotted 0.5px lightgray;
 }
 
+.comment-files-toggle {
+    padding-left: 15px;
+    padding-top: 10px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    cursor: pointer;
+    font-size: medium;
+    color: darkblue;
+}
 
-    .comment-box .file-box .file-name {
-        color: gray;
-        min-width: 12vw;
+    .comment-files-toggle i {
+        margin-right: 5px;
     }
 
-        .comment-box .file-box .file-name span {
-            display: flex;
-        }
 
+.comment-box .file-box .file-name {
+    color: gray;
+    min-width: 190px;
+}
 
-        .comment-box .file-box .file-name i {
-            color: #cfbf13;
-            margin-right: 2px;
-        }
-
-
-
-    .comment-box .file-box .file-actions {
-        margin-left: 10px;
-        font-size: medium;
+    .comment-box .file-box .file-name span {
+        display: flex;
     }
+
+
+    .comment-box .file-box .file-name i {
+        color: #cfbf13;
+        margin-right: 2px;
+    }
+
+
+
+.comment-box .file-box .file-actions {
+    margin-left: 10px;
+    font-size: medium;
+}
 
 .new-comment {
+    margin-top: 25px;
     display: flex;
     flex-direction: column;
 }
