@@ -200,3 +200,29 @@ window.drawMostAssignedToUserChart = (data) => {
 
     return "okay";
 }
+
+window.downloadIncidentFile = (baseUrl, file) => {
+    //console.log(file);
+    window.open(
+        baseUrl + "/Incidents/DownloadFile?"
+        + "type=incident"
+        + "&commentId=" + ""
+        + "&incidentId=" + file.incidentId
+        + "&filename=" + file.fileName
+        + "&contentType=" + file.contentType
+    );
+    return "Ok";
+}
+
+window.downloadCommentFile = (baseUrl, incidentId, file) => {
+    console.log(file);
+    window.open(
+        baseUrl + "/Incidents/DownloadFile?" +
+        "type=comment" +
+        "&commentId=" + file.commentId +
+        "&incidentId=" + incidentId +
+        "&filename=" + file.fileName +
+        "&contentType=" + file.contentType
+    );
+    return "Ok";
+}

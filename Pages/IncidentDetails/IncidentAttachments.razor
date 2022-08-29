@@ -1,9 +1,10 @@
 ﻿
-<div class="field-title">Attachments 
+<div class="field-title">
+    Attachments
 </div>
 <div class="files-container">
-    
-    @if(attachments is not null && attachments.Count > 0)
+
+    @if (attachments is not null && attachments.Count > 0)
     {
         <span class="incident-files-toggle" @onclick="@(() => showFiles = !showFiles)">
             @if (showFiles)
@@ -18,18 +19,20 @@
             }
         </span>
         <div class="@(showFiles? "" : "d-none")">
-            @foreach(IncidentAttachment file in attachments)
+            @foreach (IncidentAttachment file in attachments)
             {
+                var currentFile = file;
                 <div class="file-box">
                     <div class="file-name">
-                    
+
                         <span class="text-nowrap" title="@file.FileName">
-                             <i class="material-icons">attachment</i>
-                            @(file.FileName.Length >20? file.FileName.Substring(0,20) + "...": file.FileName)</span>
+                            <i class="material-icons">attachment</i>
+                            @(file.FileName.Length >20? file.FileName.Substring(0,20) + "...": file.FileName)
+                        </span>
                     </div>
                     <div class="file-actions">
-                       <i title="Download file" class="material-icons download">download</i>
-                       <i title="Delete file" class="material-icons del">delete_forever</i>
+                        <i title="Download file" @onclick="@((file) => downlodFile(currentFile))" class="material-icons download">download</i>
+                        <i title="Delete file" @onclick="@((file) => deleteFile(currentFile))" class="material-icons del">delete_forever</i>
                     </div>
                 </div>
             }
@@ -46,4 +49,25 @@
     public List<IncidentAttachment> attachments { get; set; }
 
     private bool showFiles = false;
+
+    private async Task downlodFile(IncidentAttachment file)
+    {
+        string r = new(await JS.InvokeAsync<string>("downloadIncidentFile", IncidentService.GetBaseUrl(), file ));
+    }
+
+    private async Task deleteFile(IncidentAttachment file)
+    {
+        bool confirmed = await JS.InvokeAsync<bool>("confirm", "Are you sure you want to delete file?");
+        if (confirmed)
+        {
+            string token = await localStorage.GetItemAsync<string>("token");    
+            bool isSuccess =  await IncidentService.DeleteFile(token, "incident", file.IncidentId, "", file.Id, file.FileName, file.ContentType);
+            if(isSuccess)
+            {
+                attachments = attachments.Where(f => f.Id != file.Id).ToList();
+                StateHasChanged();
+            }
+
+        }
+    }
 }

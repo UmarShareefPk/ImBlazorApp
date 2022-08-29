@@ -35,15 +35,16 @@
         <div class="@(showFiles? "" : "d-none")">
                 @foreach(var file in comment.attachments)
                 {
-                    <div class="file-box">
+                        var currentFile = file;
+                        <div class="file-box">
                         <div class="file-name">
                            
                             <span class="text-nowrap" title="@file.FileName">  <i class="material-icons">attachment</i> @(file.FileName.Length >20? file.FileName.Substring(0,20) + "...": file.FileName)</span>
                         </div>
                         <div class="file-actions">
                          
-                            <i title="Download file" class="material-icons download">download</i>
-                            <i title="Delete file" class="material-icons del">delete_forever</i>
+                            <i title="Download file" @onclick="@((file) => downlodFile(currentFile))" class="material-icons download">download</i>
+                            <i title="Delete file"   @onclick="@((file) => deleteFile(currentFile))" class="material-icons del">delete_forever</i>
                         </div>
             </div>
                 }
@@ -59,10 +60,10 @@
     [Parameter]
     public Comment comment { get; set; }
     private string username = "";
-     private bool showFiles = false;
+    private bool showFiles = false;
     private string createDateToDisplay = "";
 
-  protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
@@ -71,9 +72,30 @@
 
     protected override async Task OnParametersSetAsync()
     {
-         username = await UserService.GetUserNameById(comment.UserId);
-         createDateToDisplay = new(await JS.InvokeAsync<string>("getMoment", comment.CreateDate));
+        username = await UserService.GetUserNameById(comment.UserId);
+        createDateToDisplay = new(await JS.InvokeAsync<string>("getMoment", comment.CreateDate));
     }
-    
 
+    private async Task downlodFile(CommentAttachments file)
+    {
+        string r = await JS.InvokeAsync<string>("downloadCommentFile", IncidentService.GetBaseUrl(), comment.IncidentId, file );
+    }
+
+    private async Task deleteFile(CommentAttachments file)
+    {
+        bool confirmed = await JS.InvokeAsync<bool>("confirm", "Are you sure you want to delete file?");
+        if (confirmed)
+        {
+            string token = await localStorage.GetItemAsync<string>("token");    
+            bool isSuccess =  await IncidentService.DeleteFile(token, "comment", comment.IncidentId, comment.Id, file.Id, file.FileName, file.ContentType);
+            if(isSuccess)
+            {
+                var attachments = comment.attachments;
+                attachments = attachments.Where(f => f.Id != file.Id).ToList();
+                comment.attachments = attachments;
+                StateHasChanged();
+            }
+
+        }
+    }
 }
