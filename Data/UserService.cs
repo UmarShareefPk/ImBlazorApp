@@ -29,7 +29,7 @@ namespace ImBlazorApp.Data
         private readonly IHttpClientFactory clientFactory;
         private readonly ILocalStorageService localStorage;
         private readonly ICommon commonService;
-        private string baseUrl = "https://imwebapicore.azurewebsites.net/api";
+        private string baseUrl = "https://imnet7mongodbapi.azurewebsites.net/api";
         public UserService(IConfiguration _configuration, IHttpClientFactory _clientFactory, ILocalStorageService _localStorage, ICommon _commonService)
         {
             configuration = _configuration;
